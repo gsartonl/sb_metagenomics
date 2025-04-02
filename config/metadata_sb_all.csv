@@ -1,0 +1,107 @@
+﻿Library,FWDFiles,REVFiles,Sample,LANE,Hash_FWD,Hash_REV,Index,Fragment_size_bp,Organism,Machine,Run_Nb,Run_Date,readLen,Method,Paired-end,DNA-extraction,Project
+CM1,CM1_L6_R1_001_O1vbvtrSaKbe.fastq.gz,CM1_L6_R2_001_ehHgbF0IRy3a.fastq.gz,FV1,6,O1vbvtrSaKbe,ehHgbF0IRy3a,ATGGTTGACT,534,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM1,CM1_L7_R1_001_TBuNxoTFTc2J.fastq.gz,CM1_L7_R2_001_BmmNmU1RveYO.fastq.gz,FV1,7,TBuNxoTFTc2J,BmmNmU1RveYO,ATGGTTGACT,534,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM2,CM2_L6_R1_001_mmqyOfG7OxSj.fastq.gz,CM2_L6_R2_001_GFYBACJmIMyQ.fastq.gz,FV2,6,mmqyOfG7OxSj,GFYBACJmIMyQ,TATTGCGCTC,533,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM2,CM2_L7_R1_001_1YuHaJJsxe0q.fastq.gz,CM2_L7_R2_001_YyMOxmbG0qcM.fastq.gz,FV2,7,1YuHaJJsxe0q,YyMOxmbG0qcM,TATTGCGCTC,533,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM3,CM3_L6_R1_001_lU5DFHRsaUHK.fastq.gz,CM3_L6_R2_001_drs8whU4e2lK.fastq.gz,FV3,6,lU5DFHRsaUHK,drs8whU4e2lK,ACGCCTTGTT,510,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM3,CM3_L7_R1_001_ssaIJ5D7vqKy.fastq.gz,CM3_L7_R2_001_obraNTcdR5rI.fastq.gz,FV3,7,ssaIJ5D7vqKy,obraNTcdR5rI,ACGCCTTGTT,510,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM4,CM4_L6_R1_001_yZjWCSpX20XQ.fastq.gz,CM4_L6_R2_001_bbdBLu6WiFmV.fastq.gz,MFUL1,6,yZjWCSpX20XQ,bbdBLu6WiFmV,TTCTACATAC,532,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM4,CM4_L7_R1_001_riRYxc38w0D5.fastq.gz,CM4_L7_R2_001_hIezeXypuZuQ.fastq.gz,MFUL1,7,riRYxc38w0D5,hIezeXypuZuQ,TTCTACATAC,532,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM5,CM5_L6_R1_001_WNxtogCckjD5.fastq.gz,CM5_L6_R2_001_JtZSj2KM2x8b.fastq.gz,MFUL2,6,WNxtogCckjD5,JtZSj2KM2x8b,AACCATAGAA,532,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM5,CM5_L7_R1_001_2CLtYigxibKM.fastq.gz,CM5_L7_R2_001_FjtUpfWuL3Zo.fastq.gz,MFUL2,7,2CLtYigxibKM,FjtUpfWuL3Zo,AACCATAGAA,532,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM6,CM6_L6_R1_001_y5o5Cv1kN8hc.fastq.gz,CM6_L6_R2_001_nyulV1vD9aHt.fastq.gz,MFUL3,6,y5o5Cv1kN8hc,nyulV1vD9aHt,GGTTGCGAGG,526,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM6,CM6_L7_R1_001_16VlDdvgFuEQ.fastq.gz,CM6_L7_R2_001_6qYXdMAE1aAu.fastq.gz,MFUL3,7,16VlDdvgFuEQ,6qYXdMAE1aAu,GGTTGCGAGG,526,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM7,CM7_L6_R1_001_4GGqo9ptQyU7.fastq.gz,CM7_L6_R2_001_QRrfP2WyZkMv.fastq.gz,MSEM1,6,4GGqo9ptQyU7,QRrfP2WyZkMv,TAAGCATCCA,533,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM7,CM7_L7_R1_001_c7N1BmXIAGOa.fastq.gz,CM7_L7_R2_001_e78Iffnaz9RI.fastq.gz,MSEM1,7,c7N1BmXIAGOa,e78Iffnaz9RI,TAAGCATCCA,533,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM8,CM8_L6_R1_001_rfe1x7khXEez.fastq.gz,CM8_L6_R2_001_aMJVFPGbV7R0.fastq.gz,MSEM2,6,rfe1x7khXEez,aMJVFPGbV7R0,ACCACGACAT,526,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM8,CM8_L7_R1_001_K21w6VSE74ec.fastq.gz,CM8_L7_R2_001_ouyqFhLwmpXV.fastq.gz,MSEM2,7,K21w6VSE74ec,ouyqFhLwmpXV,ACCACGACAT,526,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM9,CM9_L6_R1_001_FUpfmS5X04S0.fastq.gz,CM9_L6_R2_001_RODCRdAPqm08.fastq.gz,MSEM3,6,FUpfmS5X04S0,RODCRdAPqm08,GCCGCACTCT,523,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM9,CM9_L7_R1_001_VT1ZaRkn3jVG.fastq.gz,CM9_L7_R2_001_xZLk1icRexrR.fastq.gz,MSEM3,7,VT1ZaRkn3jVG,xZLk1icRexrR,GCCGCACTCT,523,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM10,CM10_L6_R1_001_OHH1qaQM9dRN.fastq.gz,CM10_L6_R2_001_iMAd640AjK8F.fastq.gz,MINT1,6,OHH1qaQM9dRN,iMAd640AjK8F,CCACCAGGCA,530,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM10,CM10_L7_R1_001_Eyr4ifzTPon0.fastq.gz,CM10_L7_R2_001_OvJrikSXim4x.fastq.gz,MINT1,7,Eyr4ifzTPon0,OvJrikSXim4x,CCACCAGGCA,530,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM11,CM11_L6_R1_001_dy8SvQxqDOc0.fastq.gz,CM11_L6_R2_001_Rka7Gm3tR6bI.fastq.gz,MINT2,6,dy8SvQxqDOc0,Rka7Gm3tR6bI,GTGACACGCA,523,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM11,CM11_L7_R1_001_jEV3v331XdK7.fastq.gz,CM11_L7_R2_001_IWQVFjIx2NRL.fastq.gz,MINT2,7,jEV3v331XdK7,IWQVFjIx2NRL,GTGACACGCA,523,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM12,CM12_L6_R1_001_TU3G2L89X8m0.fastq.gz,CM12_L6_R2_001_B3nABCk4rugm.fastq.gz,MINT3,6,TU3G2L89X8m0,B3nABCk4rugm,ACAGTGTATG,521,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM12,CM12_L7_R1_001_JpiPsu4xYckG.fastq.gz,CM12_L7_R2_001_X89D2bNzxckZ.fastq.gz,MINT3,7,JpiPsu4xYckG,X89D2bNzxckZ,ACAGTGTATG,521,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM13,CM13_L6_R1_001_BNcUUqZvf67b.fastq.gz,CM13_L6_R2_001_6gNsE5vUJypy.fastq.gz,MLT1,6,BNcUUqZvf67b,6gNsE5vUJypy,TGATTATACG,521,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM13,CM13_L7_R1_001_XQH90S4zwroM.fastq.gz,CM13_L7_R2_001_egqnTpgJibii.fastq.gz,MLT1,7,XQH90S4zwroM,egqnTpgJibii,TGATTATACG,521,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM14,CM14_L6_R1_001_QRcYd6ARmS1G.fastq.gz,CM14_L6_R2_001_w0E39xUjP1FM.fastq.gz,MLT2,6,QRcYd6ARmS1G,w0E39xUjP1FM,CAGCCGCGTA,526,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM14,CM14_L7_R1_001_ydLQ5uxEymaZ.fastq.gz,CM14_L7_R2_001_KgNBh8P3jQIU.fastq.gz,MLT2,7,ydLQ5uxEymaZ,KgNBh8P3jQIU,CAGCCGCGTA,526,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM15,CM15_L6_R1_001_Rmyxi3zRq5r1.fastq.gz,CM15_L6_R2_001_fJaZqqeYw1jl.fastq.gz,MLT3,6,Rmyxi3zRq5r1,fJaZqqeYw1jl,GGTAACTCGC,523,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM15,CM15_L7_R1_001_hBijYCCoCvXQ.fastq.gz,CM15_L7_R2_001_qp7ulKidTYIW.fastq.gz,MLT3,7,hBijYCCoCvXQ,qp7ulKidTYIW,GGTAACTCGC,523,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM16,CM16_L6_R1_001_mX5fvH2U9i2V.fastq.gz,CM16_L6_R2_001_L3t5ejGWy3NP.fastq.gz,SP1,6,mX5fvH2U9i2V,L3t5ejGWy3NP,ACCGGCCGTA,468,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM16,CM16_L7_R1_001_SEN6gPhUSxCW.fastq.gz,CM16_L7_R2_001_y7kOCZPvpzW9.fastq.gz,SP1,7,SEN6gPhUSxCW,y7kOCZPvpzW9,ACCGGCCGTA,468,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM17,CM17_L6_R1_001_YBhuMkzYZOhs.fastq.gz,CM17_L6_R2_001_nkCEYnCXNT1Z.fastq.gz,SP2,6,YBhuMkzYZOhs,nkCEYnCXNT1Z,TGTAATCGAC,482,Other mixed and metagenomics,YODA,91,28.08.2020,150,HiSeq 4000,PE,,Brazil
+CM17,CM17_L7_R1_001_sBkbDX8y5au6.fastq.gz,CM17_L7_R2_001_xpnkqtH6o08U.fastq.gz,SP2,7,sBkbDX8y5au6,xpnkqtH6o08U,TGTAATCGAC,482,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM18,CM18_L6_R1_001_CsrUqWIv9eZj.fastq.gz,CM18_L6_R2_001_GGq8DEwXSlr5.fastq.gz,SP3,6,CsrUqWIv9eZj,GGq8DEwXSlr5,GTGCAGACAG,485,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+CM18,CM18_L7_R1_001_CRDbwd57vmZ3.fastq.gz,CM18_L7_R2_001_vKgH6AxAW7ia.fastq.gz,SP3,7,CRDbwd57vmZ3,vKgH6AxAW7ia,GTGCAGACAG,485,Other mixed and metagenomics,YODA,89,21.08.2020,150,HiSeq 4000,PE,,Brazil
+1c,1c_L2_R1_001_dppqpaEF0mF2.fastq.gz,1c_L2_R2_001_VhR4rr0zXMlw.fastq.gz,1c,2,dppqpaEF0mF2,VhR4rr0zXMlw,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,PCI,kenya
+4c,4c_L2_R1_001_3HAcdfjvpmYL.fastq.gz,4c_L2_R2_001_ITs4y4W3UBzm.fastq.gz,4c,2,3HAcdfjvpmYL,ITs4y4W3UBzm,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,PCI,kenya
+6c,6c_L2_R1_001_429V2DXx7naB.fastq.gz,6c_L2_R2_001_1mvuDqoDTOoB.fastq.gz,6c,2,429V2DXx7naB,1mvuDqoDTOoB,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,PCI,kenya
+7c,7c_L2_R1_001_VrnkLOE5cbYE.fastq.gz,7c_L2_R2_001_01piVBJmCuzN.fastq.gz,7c,2,VrnkLOE5cbYE,01piVBJmCuzN,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,PCI,kenya
+8c,8c_L2_R1_001_xCEl9LABq4Lb.fastq.gz,8c_L2_R2_001_12PFP8cODj6C.fastq.gz,8c,2,xCEl9LABq4Lb,12PFP8cODj6C,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,PCI,kenya
+Am1,Am1_L2_R1_001_XcLAX2v26cA7.fastq.gz,Am1_L2_R2_001_2Y2D2CE4Uejy.fastq.gz,Am1,2,XcLAX2v26cA7,2Y2D2CE4Uejy,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+Am2,Am2_L2_R1_001_kr5gBOCLuMV8.fastq.gz,Am2_L2_R2_001_2ThlxuiRleg5.fastq.gz,Am2,2,kr5gBOCLuMV8,2ThlxuiRleg5,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+ken04_08,ken04_08_L2_R1_001_PQCZmjo2I30B.fastq.gz,ken04_08_L2_R2_001_fwgQlJj2YXUQ.fastq.gz,ken04_08,2,PQCZmjo2I30B,fwgQlJj2YXUQ,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+L80_01,L80_01_L2_R1_001_vlVLmjHLigpf.fastq.gz,L80_01_L2_R2_001_zlbjeSmFbJyV.fastq.gz,L80_01,2,vlVLmjHLigpf,zlbjeSmFbJyV,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+Nik02_05,Nik02_05_L2_R1_001_dNlUPDcJk26O.fastq.gz,Nik02_05_L2_R2_001_FfAk8BjbHv3T.fastq.gz,Nik02_05,2,dNlUPDcJk26O,FfAk8BjbHv3T,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+R13_04,R13_04_L2_R1_001_6D8gqE3MnrQi.fastq.gz,R13_04_L2_R2_001_MRfbfkYziBBI.fastq.gz,R13_04,2,6D8gqE3MnrQi,MRfbfkYziBBI,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+ten19_16,ten19_16_L2_R1_001_pbWfZarRtezw.fastq.gz,ten19_16_L2_R2_001_wuROLHRG5coT.fastq.gz,Ten19_16,2,pbWfZarRtezw,wuROLHRG5coT,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+ten21_07,ten21_07_L2_R1_001_sITpJSeXPJ7q.fastq.gz,ten21_07_L2_R2_001_VaAOCsmKPylM.fastq.gz,Ten21_07,2,sITpJSeXPJ7q,VaAOCsmKPylM,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+Tom02_02,Tom02_02_L2_R1_001_hDybI9a9YH7X.fastq.gz,Tom02_02_L2_R2_001_Qi5bnQkOFsqY.fastq.gz,Tom02_02,2,hDybI9a9YH7X,Qi5bnQkOFsqY,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+tom02_10,tom02_10_L2_R1_001_nPVWu0yRhY64.fastq.gz,tom02_10_L2_R2_001_35H41xmcjJnM.fastq.gz,Tom02_10,2,nPVWu0yRhY64,35H41xmcjJnM,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+Tom05_02,Tom05_02_L2_R1_001_b5MXHeJ4gyA4.fastq.gz,Tom05_02_L2_R2_001_cUYWzm1LKp0G.fastq.gz,Tom05_02,2,b5MXHeJ4gyA4,cUYWzm1LKp0G,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+tom09_10,tom09_10_L2_R1_001_uMasdD8iLQZl.fastq.gz,tom09_10_L2_R2_001_Bpa26K9fVDQ5.fastq.gz,Tom09_10,2,uMasdD8iLQZl,Bpa26K9fVDQ5,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+X12,X12_L2_R1_001_VzRRvboyKy14.fastq.gz,X12_L2_R2_001_IiON7UPEXCxj.fastq.gz,X12,2,VzRRvboyKy14,IiON7UPEXCxj,na,na,Other mixed and metagenomics,SPOCK,95,26.06.2024,150,Aviti,PE,,malaysia
+Hsp11-8,Hsp11-8_L1_R1_001_hdWT0nymgnuz.fastq.gz,Hsp11-8_L1_R2_001_I5p7QxianPYm.fastq.gz,Hsp-11-8,1,hdWT0nymgnuz,I5p7QxianPYm,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Hsp11-8,Hsp11-8_L2_R1_001_B1K326ECF87H.fastq.gz,Hsp11-8_L2_R2_001_gCO2whFsuXnv.fastq.gz,Hsp-11-8,2,B1K326ECF87H,gCO2whFsuXnv,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Hsp11-3,Hsp11-3_L1_R1_001_GZJeEuJrj5R1.fastq.gz,Hsp11-3_L1_R2_001_PUVjSpGh94AU.fastq.gz,Hsp11-3,1,GZJeEuJrj5R1,PUVjSpGh94AU,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Hsp11-3,Hsp11-3_L2_R1_001_w3IpPhJxbrjZ.fastq.gz,Hsp11-3_L2_R2_001_SUS82a5gclVR.fastq.gz,Hsp11-3,2,w3IpPhJxbrjZ,SUS82a5gclVR,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Hsp11-4,Hsp11-4_L1_R1_001_mQwqGLN9tDek.fastq.gz,Hsp11-4_L1_R2_001_d4MZVsAEx56V.fastq.gz,Hsp11-4,1,mQwqGLN9tDek,d4MZVsAEx56V,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Hsp11-4,Hsp11-4_L2_R1_001_4nrpH525eoKu.fastq.gz,Hsp11-4_L2_R2_001_Ic0vI2vPesZ1.fastq.gz,Hsp11-4,2,4nrpH525eoKu,Ic0vI2vPesZ1,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Hsp11-5,Hsp11-5_L1_R1_001_i0ymmYtanMIQ.fastq.gz,Hsp11-5_L1_R2_001_OmVJOqVlFURp.fastq.gz,Hsp11-5,1,i0ymmYtanMIQ,OmVJOqVlFURp,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Hsp11-5,Hsp11-5_L2_R1_001_FuNnyTdlN1Jh.fastq.gz,Hsp11-5_L2_R2_001_U3tiIP80G4pY.fastq.gz,Hsp11-5,2,FuNnyTdlN1Jh,U3tiIP80G4pY,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Hsp11-6,Hsp11-6_L1_R1_001_YovoOze7pkpE.fastq.gz,Hsp11-6_L1_R2_001_XWg2N6a0COoI.fastq.gz,Hsp11-6,1,YovoOze7pkpE,XWg2N6a0COoI,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Hsp11-6,Hsp11-6_L2_R1_001_896o4D6uc042.fastq.gz,Hsp11-6_L2_R2_001_k39iJFUtHGzk.fastq.gz,Hsp11-6,2,896o4D6uc042,k39iJFUtHGzk,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Hsp11-7,Hsp11-7_L1_R1_001_LgDCUM5Pd0H3.fastq.gz,Hsp11-7_L1_R2_001_1KjJUNfZiedG.fastq.gz,Hsp11-7,1,LgDCUM5Pd0H3,1KjJUNfZiedG,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Hsp11-7,Hsp11-7_L2_R1_001_c3sqczYXijGt.fastq.gz,Hsp11-7_L2_R2_001_rAPZYlmtp4a2.fastq.gz,Hsp11-7,2,c3sqczYXijGt,rAPZYlmtp4a2,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-3,Mfe1-3_L1_R1_001_hsiPEk3XkUsu.fastq.gz,Mfe1-3_L1_R2_001_rqSrBYNy5vQ5.fastq.gz,Mfe1-3,1,hsiPEk3XkUsu,rqSrBYNy5vQ5,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-3,Mfe1-3_L2_R1_001_rK3UqiJY4uot.fastq.gz,Mfe1-3_L2_R2_001_mZrv0fTGK08S.fastq.gz,Mfe1-3,2,rK3UqiJY4uot,mZrv0fTGK08S,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-4,Mfe1-4_L1_R1_001_GS7fVVcZKWEE.fastq.gz,Mfe1-4_L1_R2_001_znwL3JC3nYJu.fastq.gz,Mfe1-4,1,GS7fVVcZKWEE,znwL3JC3nYJu,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-4,Mfe1-4_L2_R1_001_NTE5P6CKXDIn.fastq.gz,Mfe1-4_L2_R2_001_PmrtymA2o3vT.fastq.gz,Mfe1-4,2,NTE5P6CKXDIn,PmrtymA2o3vT,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-5,Mfe1-5_L1_R1_001_qjVMr9qgBIQR.fastq.gz,Mfe1-5_L1_R2_001_Qjc03ZdR4IWa.fastq.gz,Mfe1-5,1,qjVMr9qgBIQR,Qjc03ZdR4IWa,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-5,Mfe1-5_L2_R1_001_wDOMCWmi6ONV.fastq.gz,Mfe1-5_L2_R2_001_Qqh1ELJPqP21.fastq.gz,Mfe1-5,2,wDOMCWmi6ONV,Qqh1ELJPqP21,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-6,Mfe1-6_L1_R1_001_NjLT7DQKoHXa.fastq.gz,Mfe1-6_L1_R2_001_g9PgbypSuTzZ.fastq.gz,Mfe1-6,1,NjLT7DQKoHXa,g9PgbypSuTzZ,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-6,Mfe1-6_L2_R1_001_kRLdoWsh6xS7.fastq.gz,Mfe1-6_L2_R2_001_0jRBCqi4KjCG.fastq.gz,Mfe1-6,2,kRLdoWsh6xS7,0jRBCqi4KjCG,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-7,Mfe1-7_L1_R1_001_lRHgihTfo8Ay.fastq.gz,Mfe1-7_L1_R2_001_wq7px1lDC5TD.fastq.gz,Mfe1-7,1,lRHgihTfo8Ay,wq7px1lDC5TD,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-7,Mfe1-7_L2_R1_001_0gWBzHfDr2In.fastq.gz,Mfe1-7_L2_R2_001_sycDb77RDk3b.fastq.gz,Mfe1-7,2,0gWBzHfDr2In,sycDb77RDk3b,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-8,Mfe1-8_L1_R1_001_EXYc9rvKtdzy.fastq.gz,Mfe1-8_L1_R2_001_7JzVGLhLE8Um.fastq.gz,Mfe1-8,1,EXYc9rvKtdzy,7JzVGLhLE8Um,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe1-8,Mfe1-8_L2_R1_001_LOxbUL5kpXKH.fastq.gz,Mfe1-8_L2_R2_001_HPcWEiHe9UDA.fastq.gz,Mfe1-8,2,LOxbUL5kpXKH,HPcWEiHe9UDA,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-3,Mfe2-3_L1_R1_001_xk3eqhkYyjEi.fastq.gz,Mfe2-3_L1_R2_001_JC2wgqKh5aIw.fastq.gz,Mfe2-3,1,xk3eqhkYyjEi,JC2wgqKh5aIw,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-3,Mfe2-3_L2_R1_001_X887Jd1yszHv.fastq.gz,Mfe2-3_L2_R2_001_Ndj3N1HkP17h.fastq.gz,Mfe2-3,2,X887Jd1yszHv,Ndj3N1HkP17h,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-4,Mfe2-4_L1_R1_001_kYPs4t4kq0vx.fastq.gz,Mfe2-4_L1_R2_001_6YsGPSzEFRHe.fastq.gz,Mfe2-4,1,kYPs4t4kq0vx,6YsGPSzEFRHe,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-4,Mfe2-4_L2_R1_001_1nP4FutRArLr.fastq.gz,Mfe2-4_L2_R2_001_CBddkOZb1NAy.fastq.gz,Mfe2-4,2,1nP4FutRArLr,CBddkOZb1NAy,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-5,Mfe2-5_L1_R1_001_54SS4Y7YO3yA.fastq.gz,Mfe2-5_L1_R2_001_QgvEjg3ckQtt.fastq.gz,Mfe2-5,1,54SS4Y7YO3yA,QgvEjg3ckQtt,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-5,Mfe2-5_L2_R1_001_EoOktlTuqMHH.fastq.gz,Mfe2-5_L2_R2_001_CbyT6mJDe97o.fastq.gz,Mfe2-5,2,EoOktlTuqMHH,CbyT6mJDe97o,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-6,Mfe2-6_L1_R1_001_WtvQh2EX9J1C.fastq.gz,Mfe2-6_L1_R2_001_GXxV4C7hwrek.fastq.gz,Mfe2-6,1,WtvQh2EX9J1C,GXxV4C7hwrek,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-6,Mfe2-6_L2_R1_001_auKumMmP1QN3.fastq.gz,Mfe2-6_L2_R2_001_cPZBeKimZ42A.fastq.gz,Mfe2-6,2,auKumMmP1QN3,cPZBeKimZ42A,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-7,Mfe2-7_L1_R1_001_zxXIZ77noQYQ.fastq.gz,Mfe2-7_L1_R2_001_hokUO84h8F6J.fastq.gz,Mfe2-7,1,zxXIZ77noQYQ,hokUO84h8F6J,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-7,Mfe2-7_L2_R1_001_I23gzn7HHYgk.fastq.gz,Mfe2-7_L2_R2_001_HqUhe72mk81T.fastq.gz,Mfe2-7,2,I23gzn7HHYgk,HqUhe72mk81T,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-8,Mfe2-8_L1_R1_001_V8hApbl0dPmy.fastq.gz,Mfe2-8_L1_R2_001_Yx7qT67rT14L.fastq.gz,Mfe2-8,1,V8hApbl0dPmy,Yx7qT67rT14L,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-8,Mfe2-8_L2_R1_001_WYse9MR2ZsjQ.fastq.gz,Mfe2-8_L2_R2_001_p5S4bxuq28bN.fastq.gz,Mfe2-8,2,WYse9MR2ZsjQ,p5S4bxuq28bN,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-9,Mfe2-9_L1_R1_001_es14P9Ps3YtR.fastq.gz,Mfe2-9_L1_R2_001_lpgOi7mM3uVe.fastq.gz,Mfe2-9,1,es14P9Ps3YtR,lpgOi7mM3uVe,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe2-9,Mfe2-9_L2_R1_001_WpHUQ5EAjzTl.fastq.gz,Mfe2-9_L2_R2_001_HPvgLTZmmMHO.fastq.gz,Mfe2-9,2,WpHUQ5EAjzTl,HPvgLTZmmMHO,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-3,Mfe3-3_L1_R1_001_VqAI2nzHFhab.fastq.gz,Mfe3-3_L1_R2_001_KeparpcDDF0r.fastq.gz,Mfe3-3,1,VqAI2nzHFhab,KeparpcDDF0r,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-3,Mfe3-3_L2_R1_001_enrC24BLb4xy.fastq.gz,Mfe3-3_L2_R2_001_EdLkL9PDa2t0.fastq.gz,Mfe3-3,2,enrC24BLb4xy,EdLkL9PDa2t0,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-4,Mfe3-4_L1_R1_001_eQi8uabdFUGq.fastq.gz,Mfe3-4_L1_R2_001_eJvEmqvyirmn.fastq.gz,Mfe3-4,1,eQi8uabdFUGq,eJvEmqvyirmn,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-4,Mfe3-4_L2_R1_001_Vsl5UzZTiDdC.fastq.gz,Mfe3-4_L2_R2_001_UciolpADH5wF.fastq.gz,Mfe3-4,2,Vsl5UzZTiDdC,UciolpADH5wF,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-5,Mfe3-5_L1_R1_001_YYuaU6pefBIz.fastq.gz,Mfe3-5_L1_R2_001_4ZOV3QrFe4Of.fastq.gz,Mfe3-5,1,YYuaU6pefBIz,4ZOV3QrFe4Of,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-5,Mfe3-5_L2_R1_001_CXb3tVn29j6W.fastq.gz,Mfe3-5_L2_R2_001_54XlpMZDvkNA.fastq.gz,Mfe3-5,2,CXb3tVn29j6W,54XlpMZDvkNA,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-6,Mfe3-6_L1_R1_001_gpXLfhZ4WCAj.fastq.gz,Mfe3-6_L1_R2_001_bOXYCzs3R1RF.fastq.gz,Mfe3-6,1,gpXLfhZ4WCAj,bOXYCzs3R1RF,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-6,Mfe3-6_L2_R1_001_3sDdYCmKeXJE.fastq.gz,Mfe3-6_L2_R2_001_PXl7E3p1HSiH.fastq.gz,Mfe3-6,2,3sDdYCmKeXJE,PXl7E3p1HSiH,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-7,Mfe3-7_L1_R1_001_iKEP900vwhHE.fastq.gz,Mfe3-7_L1_R2_001_nhE3rKhUdXGA.fastq.gz,Mfe3-7,1,iKEP900vwhHE,nhE3rKhUdXGA,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-7,Mfe3-7_L2_R1_001_MsVHCVf5mptI.fastq.gz,Mfe3-7_L2_R2_001_AGVWPi1mkRcH.fastq.gz,Mfe3-7,2,MsVHCVf5mptI,AGVWPi1mkRcH,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-8,Mfe3-8_L1_R1_001_z1hynWM5H6YR.fastq.gz,Mfe3-8_L1_R2_001_UNY59VVgIrPK.fastq.gz,Mfe3-8,1,z1hynWM5H6YR,UNY59VVgIrPK,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-8,Mfe3-8_L2_R1_001_5oUxvlehZJIf.fastq.gz,Mfe3-8_L2_R2_001_oNc47QohBUMb.fastq.gz,Mfe3-8,2,5oUxvlehZJIf,oNc47QohBUMb,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-9,Mfe3-9_L1_R1_001_8tSCLPx9gqQo.fastq.gz,Mfe3-9_L1_R2_001_7khX7rMwTLqR.fastq.gz,Mfe3-9,1,8tSCLPx9gqQo,7khX7rMwTLqR,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya
+Mfe3-9,Mfe3-9_L2_R1_001_k3LKMNU74dtA.fastq.gz,Mfe3-9_L2_R2_001_nLn20QgUggHb.fastq.gz,Mfe3-9,2,k3LKMNU74dtA,nLn20QgUggHb,,na,Other mixed and metagenomics,SPOCK,246,17.01.2025,150,Aviti,PE,maxwell,kenya

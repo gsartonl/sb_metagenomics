@@ -1,0 +1,127 @@
+#metagenomics config file#
+
+username:
+  - gsartonl
+
+path:
+  - /work/FAC/FBM/DMF/pengel/spirit/gsartonl/metagenomics
+
+Preprocessing:
+  raw : '/00_rawData'
+  trimGalore : '/01_trimmed'
+  hostRemoved : '/02_hostRemoval'
+
+assembly:
+  inDir: '/01_trimmed'
+  outDir: '/03_assembly'
+
+HostGenome:
+  - '/scratch/gsartonl/metagenomics/GCA_011392965.1_Fvar_1.2_genomic.fna'
+Index:
+  - '/scratch/gsartonl/metagenomics/index'
+
+scaffoldFiltering:
+  - '1000'
+
+LIBRARY:
+  - CM1
+  - CM2
+  - CM3
+  - CM4
+  - CM5
+  - CM6
+  - CM7
+  - CM8
+  - CM9
+  - CM10
+  - CM11
+  - CM12
+  - CM13
+  - CM14
+  - CM15
+  - CM16
+  - CM17
+  - CM18
+
+LANES :
+  - L6
+  - L7
+  - L2
+FWD :
+  - CM1_L6_R1_001_O1vbvtrSaKbe
+  - CM1_L7_R1_001_TBuNxoTFTc2J
+  - CM2_L6_R1_001_mmqyOfG7OxSj
+  - CM2_L7_R1_001_1YuHaJJsxe0q
+  - CM3_L6_R1_001_lU5DFHRsaUHK
+  - CM3_L7_R1_001_ssaIJ5D7vqKy
+  - CM4_L6_R1_001_yZjWCSpX20XQ
+  - CM4_L7_R1_001_riRYxc38w0D5
+  - CM5_L6_R1_001_WNxtogCckjD5
+  - CM5_L7_R1_001_2CLtYigxibKM
+  - CM6_L6_R1_001_y5o5Cv1kN8hc
+  - CM6_L7_R1_001_16VlDdvgFuEQ
+  - CM7_L6_R1_001_4GGqo9ptQyU7
+  - CM7_L7_R1_001_c7N1BmXIAGOa
+  - CM8_L6_R1_001_bvvYiMFG2vMT
+  - CM8_L7_R1_001_TU8qgVsjM8LY
+  - CM9_L6_R1_001_FUpfmS5X04S0
+  - CM9_L7_R1_001_VT1ZaRkn3jVG
+  - CM10_L6_R1_001_OHH1qaQM9dRN
+  - CM10_L7_R1_001_Eyr4ifzTPon0
+  - CM11_L6_R1_001_dy8SvQxqDOc0
+  - CM11_L7_R1_001_jEV3v331XdK7
+  - CM12_L6_R1_001_TU3G2L89X8m0
+  - CM12_L7_R1_001_JpiPsu4xYckG
+  - CM13_L6_R1_001_BNcUUqZvf67b
+  - CM13_L7_R1_001_XQH90S4zwroM
+  - CM14_L6_R1_001_QRcYd6ARmS1G
+  - CM14_L7_R1_001_ydLQ5uxEymaZ
+  - CM15_L6_R1_001_Rmyxi3zRq5r1
+  - CM15_L7_R1_001_hBijYCCoCvXQ
+  - CM16_L6_R1_001_mX5fvH2U9i2V
+  - CM16_L7_R1_001_SEN6gPhUSxCW
+  - CM17_L6_R1_001_YBhuMkzYZOhs
+  - CM17_L7_R1_001_sBkbDX8y5au6
+  - CM18_L6_R1_001_CsrUqWIv9eZj
+  - CM18_L7_R1_001_CRDbwd57vmZ3
+
+REV :
+  - CM1_L6_R2_001_ehHgbF0IRy3a
+  - CM1_L7_R2_001_BmmNmU1RveYO
+  - CM2_L6_R2_001_GFYBACJmIMyQ
+  - CM2_L7_R2_001_YyMOxmbG0qcM
+  - CM3_L6_R2_001_drs8whU4e2lK
+  - CM3_L7_R2_001_obraNTcdR5rI
+  - CM4_L6_R2_001_bbdBLu6WiFmV
+  - CM4_L7_R2_001_hIezeXypuZuQ
+  - CM5_L6_R2_001_JtZSj2KM2x8b
+  - CM5_L7_R2_001_FjtUpfWuL3Zo
+  - CM6_L6_R2_001_nyulV1vD9aHt
+  - CM6_L7_R2_001_6qYXdMAE1aAu
+  - CM7_L6_R2_001_QRrfP2WyZkMv
+  - CM7_L7_R2_001_e78Iffnaz9RI
+  - CM8_L6_R2_001_egIAXddXnoNW
+  - CM8_L7_R2_001_szK333yhbJsZ
+  - CM9_L6_R2_001_RODCRdAPqm08
+  - CM9_L7_R2_001_xZLk1icRexrR
+  - CM10_L6_R2_001_iMAd640AjK8F
+  - CM10_L7_R2_001_OvJrikSXim4x
+  - CM11_L6_R2_001_Rka7Gm3tR6bI
+  - CM11_L7_R2_001_IWQVFjIx2NRL
+  - CM12_L6_R2_001_B3nABCk4rugm
+  - CM12_L7_R2_001_X89D2bNzxckZ
+  - CM13_L6_R2_001_6gNsE5vUJypy
+  - CM13_L7_R2_001_egqnTpgJibii
+  - CM14_L6_R2_001_w0E39xUjP1FM
+  - CM14_L7_R2_001_KgNBh8P3jQIU
+  - CM15_L6_R2_001_fJaZqqeYw1jl
+  - CM15_L7_R2_001_qp7ulKidTYIW
+  - CM16_L6_R2_001_L3t5ejGWy3NP
+  - CM16_L7_R2_001_y7kOCZPvpzW9
+  - CM17_L6_R2_001_nkCEYnCXNT1Z
+  - CM17_L7_R2_001_xpnkqtH6o08U
+  - CM18_L6_R2_001_GGq8DEwXSlr5
+  - CM18_L7_R2_001_vKgH6AxAW7ia
+
+metadata:
+  - ../config/metadata_sb_all.csv

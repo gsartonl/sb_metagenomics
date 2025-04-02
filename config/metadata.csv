@@ -1,0 +1,7 @@
+﻿Library,FWDFILE,REVFILE,Sample,Lane,Hash_FWD,Hash_REV,Index,Fragment_size_bp,Organism,Machine,Run_Nb,Run_Date,Cycle_Nb,Run_Type
+CM1,CM1_L6_R1_001_O1vbvtrSaKbe.fastq.gz,CM1_L6_R2_001_ehHgbF0IRy3a.fastq.gz,FV1,6,O1vbvtrSaKbe,ehHgbF0IRy3a,CCACCAGGCA,530,Other mixed and metagenomic,YODA,89,21.08.20,150,HiSeq 4000 PE
+CM1,CM1_L7_R1_001_TBuNxoTFTc2J.fastq.gz,CM1_L7_R2_001_BmmNmU1RveYO.fastq.gz,FV1,7,TBuNxoTFTc2J,BmmNmU1RveYO,CCACCAGGCA,530,Other mixed and metagenomic,YODA,89,21.08.20,150,HiSeq 4000 PE
+CM10,CM10_L6_R1_001_OHH1qaQM9dRN.fastq.gz,CM10_L6_R2_001_iMAd640AjK8F.fastq.gz,MINT1,6,OHH1qaQM9dRN,iMAd640AjK8F,CCACCAGGCA,530,Other mixed and metagenomic,YODA,89,21.08.20,150,HiSeq 4000 PE
+CM10,CM10_L7_R1_001_Eyr4ifzTPon0.fastq.gz,CM10_L7_R2_001_OvJrikSXim4x.fastq.gz,MINT1,7,Eyr4ifzTPon0,OvJrikSXim4x,CCACCAGGCA,530,Other mixed and metagenomic,YODA,89,21.08.20,150,HiSeq 4000 PE
+CM18,CM18_L6_R1_001_CsrUqWIv9eZj.fastq.gz,CM18_L6_R2_001_GGq8DEwXSlr5.fastq.gz,SP3,6,CsrUqWIv9eZj,GGq8DEwXSlr5,GTGCAGACAG,485,Other mixed and metagenomic,YODA,89,21.08.20,150,HiSeq 4000 PE
+CM18,CM18_L7_R1_001_CRDbwd57vmZ3.fastq.gz,CM18_L7_R2_001_vKgH6AxAW7ia.fastq.gz,SP3,7,CRDbwd57vmZ3,vKgH6AxAW7ia,GTGCAGACAG,485,Other mixed and metagenomic,YODA,89,21.08.20,150,HiSeq 4000 PE
