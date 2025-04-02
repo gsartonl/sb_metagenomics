@@ -1,0 +1,15 @@
+channels :
+  - bioconda
+  - conda-forge
+dependencies :
+  - spades =3.15.3
+  - megahit =1.2.9
+  - openmp =8.0.1
+  - bwa =0.7.17
+  - assembly-stats =1.0.1
+  - r-base=4.1.1
+  - r-gplots
+  - r-tidyverse
+  - r-rcolorbrewer
+  - r-readr
+  - r-plyr

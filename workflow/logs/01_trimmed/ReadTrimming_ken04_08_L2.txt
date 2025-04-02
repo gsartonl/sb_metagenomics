@@ -1,0 +1,530 @@
+Path to Cutadapt set as: 'cutadapt' (default)
+Cutadapt seems to be working fine (tested command 'cutadapt --version')
+Cutadapt version: 5.0
+Could not detect version of Python used by Cutadapt from the first line of Cutadapt (but found this: >>>#!/bin/sh<<<)
+Letting the (modified) Cutadapt deal with the Python version instead
+pigz 2.8
+Parallel gzip (pigz) detected. Proceeding with multicore (de)compression using 7 cores
+
+igzip command line interface 2.31.1
+igzip detected. Using igzip for decompressing
+
+Output will be written into the directory: /work/FAC/FBM/DMF/pengel/spirit/gsartonl/metagenomics/01_trimmed/
+Using user-specified basename (>>ken04_08_L2<<) instead of deriving the filename from the input file(s)
+
+
+AUTO-DETECTING ADAPTER TYPE
+===========================
+Attempting to auto-detect adapter type from the first 1 million sequences of the first file (>> /scratch/gsartonl/metagenomics/00_data/ken04_08_L2_R1_001_PQCZmjo2I30B.fastq.gz <<)
+
+Found perfect matches for the following adapter sequences:
+Adapter type	Count	Sequence	Sequences analysed	Percentage
+Nextera	167459	CTGTCTCTTATA	1000000	16.75
+smallRNA	13	TGGAATTCTCGG	1000000	0.00
+Illumina	4	AGATCGGAAGAGC	1000000	0.00
+Using Nextera adapter for trimming (count: 167459). Second best hit was smallRNA (count: 13)
+
+Writing report to '/work/FAC/FBM/DMF/pengel/spirit/gsartonl/metagenomics/01_trimmed/ken04_08_L2_R1_001_PQCZmjo2I30B.fastq.gz_trimming_report.txt'
+
+SUMMARISING RUN PARAMETERS
+==========================
+Input filename: /scratch/gsartonl/metagenomics/00_data/ken04_08_L2_R1_001_PQCZmjo2I30B.fastq.gz
+Trimming mode: paired-end
+Trim Galore version: 0.6.10
+Cutadapt version: 5.0
+Python version: could not detect
+Number of cores used for trimming: 7
+Quality Phred score cutoff: 20
+Quality encoding type selected: ASCII+33
+Adapter sequence: 'CTGTCTCTTATA' (Nextera Transposase sequence; auto-detected)
+Maximum trimming error rate: 0.1 (default)
+Maximum number of tolerated Ns: 1
+Minimum required adapter overlap (stringency): 1 bp
+Minimum required sequence length for both reads before a sequence pair gets removed: 80 bp
+Running FastQC on the data once trimming has completed
+Running FastQC with the following extra arguments: '--outdir /work/FAC/FBM/DMF/pengel/spirit/gsartonl/metagenomics/01_trimmed/fastqc_trimmed/'
+Output file(s) will be GZIP compressed
+
+Cutadapt seems to be fairly up-to-date (version 5.0). Setting -j 7
+Writing final adapter and quality trimmed output to ken04_08_L2_R1_001_PQCZmjo2I30B_trimmed.fq.gz
+
+
+  >>> Now performing quality (cutoff '-q 20') and adapter trimming in a single pass for the adapter sequence: 'CTGTCTCTTATA' from file /scratch/gsartonl/metagenomics/00_data/ken04_08_L2_R1_001_PQCZmjo2I30B.fastq.gz <<< 
+10000000 sequences processed
+20000000 sequences processed
+This is cutadapt 5.0 with Python 3.12.9
+Command line parameters: -j 7 -e 0.1 -q 20 -O 1 -a CTGTCTCTTATA /scratch/gsartonl/metagenomics/00_data/ken04_08_L2_R1_001_PQCZmjo2I30B.fastq.gz
+Processing single-end reads on 7 cores ...
+
+=== Summary ===
+
+Total reads processed:              20,080,359
+Reads with adapters:                 8,187,138 (40.8%)
+Reads written (passing filters):    20,080,359 (100.0%)
+
+Total basepairs processed: 3,032,134,209 bp
+Quality-trimmed:               6,039,736 bp (0.2%)
+Total written (filtered):  2,813,112,518 bp (92.8%)
+
+=== Adapter 1 ===
+
+Sequence: CTGTCTCTTATA; Type: regular 3'; Length: 12; Trimmed: 8187138 times
+
+Minimum overlap: 1
+No. of allowed errors:
+1-9 bp: 0; 10-12 bp: 1
+
+Bases preceding removed adapters:
+  A: 19.3%
+  C: 29.9%
+  G: 22.5%
+  T: 28.3%
+  none/other: 0.0%
+
+Overview of removed sequences
+length	count	expect	max.err	error counts
+1	3186823	5020089.8	0	3186823
+2	842914	1255022.4	0	842914
+3	231698	313755.6	0	231698
+4	102639	78438.9	0	102639
+5	59607	19609.7	0	59607
+6	53711	4902.4	0	53711
+7	46764	1225.6	0	46764
+8	42195	306.4	0	42195
+9	39419	76.6	0	39111 308
+10	38639	19.2	1	36492 2147
+11	39307	4.8	1	37093 2214
+12	41613	1.2	1	39378 2235
+13	44230	1.2	1	41860 2370
+14	47020	1.2	1	44739 2281
+15	49069	1.2	1	46770 2299
+16	50174	1.2	1	47787 2387
+17	52336	1.2	1	49419 2917
+18	37776	1.2	1	36421 1355
+19	37735	1.2	1	36064 1671
+20	35383	1.2	1	33826 1557
+21	36780	1.2	1	34910 1870
+22	36470	1.2	1	34836 1634
+23	40581	1.2	1	38372 2209
+24	42095	1.2	1	40044 2051
+25	46880	1.2	1	44440 2440
+26	50827	1.2	1	47978 2849
+27	44754	1.2	1	42835 1919
+28	39290	1.2	1	37799 1491
+29	36873	1.2	1	35308 1565
+30	33807	1.2	1	32230 1577
+31	32659	1.2	1	31062 1597
+32	34219	1.2	1	32530 1689
+33	36842	1.2	1	34982 1860
+34	43931	1.2	1	41407 2524
+35	38655	1.2	1	37133 1522
+36	44890	1.2	1	42869 2021
+37	44292	1.2	1	42406 1886
+38	46991	1.2	1	44521 2470
+39	32899	1.2	1	31751 1148
+40	33317	1.2	1	31648 1669
+41	31128	1.2	1	29715 1413
+42	32651	1.2	1	31050 1601
+43	38167	1.2	1	36049 2118
+44	62290	1.2	1	58495 3795
+45	32220	1.2	1	30972 1248
+46	79216	1.2	1	75090 4126
+47	46607	1.2	1	45032 1575
+48	32241	1.2	1	31129 1112
+49	22255	1.2	1	21461 794
+50	22915	1.2	1	22339 576
+51	30068	1.2	1	28817 1251
+52	26127	1.2	1	25164 963
+53	37164	1.2	1	35318 1846
+54	30436	1.2	1	29233 1203
+55	32769	1.2	1	31570 1199
+56	41274	1.2	1	39412 1862
+57	38076	1.2	1	36759 1317
+58	40644	1.2	1	39119 1525
+59	33651	1.2	1	32557 1094
+60	32481	1.2	1	31251 1230
+61	31797	1.2	1	30483 1314
+62	24217	1.2	1	23313 904
+63	30304	1.2	1	28965 1339
+64	30076	1.2	1	28754 1322
+65	33199	1.2	1	31779 1420
+66	38392	1.2	1	36388 2004
+67	45225	1.2	1	42880 2345
+68	41108	1.2	1	39193 1915
+69	33881	1.2	1	32306 1575
+70	40038	1.2	1	38042 1996
+71	24254	1.2	1	23222 1032
+72	26165	1.2	1	24892 1273
+73	26928	1.2	1	25627 1301
+74	30683	1.2	1	29096 1587
+75	28735	1.2	1	27295 1440
+76	35105	1.2	1	33315 1790
+77	31603	1.2	1	30064 1539
+78	32968	1.2	1	31532 1436
+79	35992	1.2	1	34515 1477
+80	26007	1.2	1	25047 960
+81	25381	1.2	1	24404 977
+82	25543	1.2	1	24406 1137
+83	23108	1.2	1	22017 1091
+84	22714	1.2	1	21710 1004
+85	29025	1.2	1	27668 1357
+86	30198	1.2	1	28766 1432
+87	32641	1.2	1	31147 1494
+88	26275	1.2	1	25213 1062
+89	31940	1.2	1	30584 1356
+90	26430	1.2	1	25295 1135
+91	26208	1.2	1	25212 996
+92	20032	1.2	1	19221 811
+93	22755	1.2	1	21829 926
+94	19779	1.2	1	18977 802
+95	30804	1.2	1	29341 1463
+96	26381	1.2	1	25224 1157
+97	26633	1.2	1	25388 1245
+98	27848	1.2	1	26699 1149
+99	25015	1.2	1	23973 1042
+100	27633	1.2	1	26588 1045
+101	20587	1.2	1	19814 773
+102	22766	1.2	1	21896 870
+103	18101	1.2	1	17392 709
+104	25896	1.2	1	24816 1080
+105	13282	1.2	1	12756 526
+106	27257	1.2	1	26124 1133
+107	26424	1.2	1	25145 1279
+108	18218	1.2	1	17445 773
+109	19778	1.2	1	18990 788
+110	33685	1.2	1	32331 1354
+111	11557	1.2	1	11077 480
+112	16329	1.2	1	15625 704
+113	19187	1.2	1	18532 655
+114	10568	1.2	1	10142 426
+115	17542	1.2	1	16966 576
+116	25668	1.2	1	24736 932
+117	6344	1.2	1	5998 346
+118	5613	1.2	1	5288 325
+119	14742	1.2	1	14181 561
+120	2925	1.2	1	2655 270
+121	10720	1.2	1	10287 433
+122	8193	1.2	1	7884 309
+123	11293	1.2	1	10856 437
+124	4376	1.2	1	4218 158
+125	1775	1.2	1	1680 95
+126	197	1.2	1	142 55
+127	589	1.2	1	528 61
+128	210	1.2	1	144 66
+129	142	1.2	1	85 57
+130	197	1.2	1	141 56
+131	94	1.2	1	46 48
+132	149	1.2	1	107 42
+133	63	1.2	1	18 45
+134	52	1.2	1	16 36
+135	59	1.2	1	3 56
+136	48	1.2	1	9 39
+137	48	1.2	1	5 43
+138	49	1.2	1	3 46
+139	82	1.2	1	2 80
+140	40	1.2	1	4 36
+141	59	1.2	1	2 57
+142	71	1.2	1	3 68
+143	258	1.2	1	1 257
+144	34	1.2	1	0 34
+145	59	1.2	1	1 58
+146	35	1.2	1	0 35
+147	50	1.2	1	0 50
+148	130	1.2	1	2 128
+149	50	1.2	1	1 49
+150	25	1.2	1	0 25
+151	18	1.2	1	0 18
+
+RUN STATISTICS FOR INPUT FILE: /scratch/gsartonl/metagenomics/00_data/ken04_08_L2_R1_001_PQCZmjo2I30B.fastq.gz
+=============================================
+20080359 sequences processed in total
+The length threshold of paired-end sequences gets evaluated later on (in the validation step)
+
+Writing report to '/work/FAC/FBM/DMF/pengel/spirit/gsartonl/metagenomics/01_trimmed/ken04_08_L2_R2_001_fwgQlJj2YXUQ.fastq.gz_trimming_report.txt'
+
+SUMMARISING RUN PARAMETERS
+==========================
+Input filename: /scratch/gsartonl/metagenomics/00_data/ken04_08_L2_R2_001_fwgQlJj2YXUQ.fastq.gz
+Trimming mode: paired-end
+Trim Galore version: 0.6.10
+Cutadapt version: 5.0
+Python version: could not detect
+Number of cores used for trimming: 7
+Quality Phred score cutoff: 20
+Quality encoding type selected: ASCII+33
+Adapter sequence: 'CTGTCTCTTATA' (Nextera Transposase sequence; auto-detected)
+Maximum trimming error rate: 0.1 (default)
+Maximum number of tolerated Ns: 1
+Minimum required adapter overlap (stringency): 1 bp
+Minimum required sequence length for both reads before a sequence pair gets removed: 80 bp
+Running FastQC on the data once trimming has completed
+Running FastQC with the following extra arguments: '--outdir /work/FAC/FBM/DMF/pengel/spirit/gsartonl/metagenomics/01_trimmed/fastqc_trimmed/'
+Output file(s) will be GZIP compressed
+
+Cutadapt seems to be fairly up-to-date (version 5.0). Setting -j -j 7
+Writing final adapter and quality trimmed output to ken04_08_L2_R2_001_fwgQlJj2YXUQ_trimmed.fq.gz
+
+
+  >>> Now performing quality (cutoff '-q 20') and adapter trimming in a single pass for the adapter sequence: 'CTGTCTCTTATA' from file /scratch/gsartonl/metagenomics/00_data/ken04_08_L2_R2_001_fwgQlJj2YXUQ.fastq.gz <<< 
+10000000 sequences processed
+20000000 sequences processed
+This is cutadapt 5.0 with Python 3.12.9
+Command line parameters: -j 7 -e 0.1 -q 20 -O 1 -a CTGTCTCTTATA /scratch/gsartonl/metagenomics/00_data/ken04_08_L2_R2_001_fwgQlJj2YXUQ.fastq.gz
+Processing single-end reads on 7 cores ...
+
+=== Summary ===
+
+Total reads processed:              20,080,359
+Reads with adapters:                 7,849,234 (39.1%)
+Reads written (passing filters):    20,080,359 (100.0%)
+
+Total basepairs processed: 3,032,134,209 bp
+Quality-trimmed:              58,124,269 bp (1.9%)
+Total written (filtered):  2,811,970,241 bp (92.7%)
+
+=== Adapter 1 ===
+
+Sequence: CTGTCTCTTATA; Type: regular 3'; Length: 12; Trimmed: 7849234 times
+
+Minimum overlap: 1
+No. of allowed errors:
+1-9 bp: 0; 10-12 bp: 1
+
+Bases preceding removed adapters:
+  A: 19.8%
+  C: 29.4%
+  G: 22.2%
+  T: 28.5%
+  none/other: 0.1%
+
+Overview of removed sequences
+length	count	expect	max.err	error counts
+1	3345903	5020089.8	0	3345903
+2	854723	1255022.4	0	854723
+3	244743	313755.6	0	244743
+4	104134	78438.9	0	104134
+5	61709	19609.7	0	61709
+6	54010	4902.4	0	54010
+7	47945	1225.6	0	47945
+8	42651	306.4	0	42651
+9	39582	76.6	0	39270 312
+10	38380	19.2	1	36682 1698
+11	39137	4.8	1	37362 1775
+12	41281	1.2	1	39391 1890
+13	43860	1.2	1	41724 2136
+14	45810	1.2	1	43448 2362
+15	48571	1.2	1	46149 2422
+16	48924	1.2	1	46589 2335
+17	50854	1.2	1	48033 2821
+18	37816	1.2	1	36386 1430
+19	40535	1.2	1	38364 2171
+20	31701	1.2	1	30461 1240
+21	34934	1.2	1	32970 1964
+22	39443	1.2	1	36695 2748
+23	36717	1.2	1	34717 2000
+24	43574	1.2	1	41034 2540
+25	45574	1.2	1	42886 2688
+26	44000	1.2	1	42029 1971
+27	44596	1.2	1	42236 2360
+28	41735	1.2	1	39600 2135
+29	34554	1.2	1	33172 1382
+30	33940	1.2	1	32277 1663
+31	31052	1.2	1	29667 1385
+32	34095	1.2	1	32379 1716
+33	36415	1.2	1	34535 1880
+34	38960	1.2	1	37132 1828
+35	43849	1.2	1	41009 2840
+36	40871	1.2	1	38448 2423
+37	42813	1.2	1	40613 2200
+38	41177	1.2	1	39094 2083
+39	36466	1.2	1	34703 1763
+40	32110	1.2	1	30402 1708
+41	33605	1.2	1	31324 2281
+42	26526	1.2	1	24996 1530
+43	42882	1.2	1	39018 3864
+44	23807	1.2	1	22105 1702
+45	39249	1.2	1	36128 3121
+46	38537	1.2	1	36354 2183
+47	40978	1.2	1	39014 1964
+48	42285	1.2	1	40451 1834
+49	35222	1.2	1	33629 1593
+50	32726	1.2	1	30866 1860
+51	28171	1.2	1	26450 1721
+52	29894	1.2	1	27904 1990
+53	32272	1.2	1	30410 1862
+54	30243	1.2	1	28653 1590
+55	37516	1.2	1	34859 2657
+56	39322	1.2	1	36396 2926
+57	38829	1.2	1	36767 2062
+58	40269	1.2	1	38284 1985
+59	42601	1.2	1	40380 2221
+60	29110	1.2	1	28049 1061
+61	27332	1.2	1	26228 1104
+62	26501	1.2	1	25204 1297
+63	30706	1.2	1	28811 1895
+64	30014	1.2	1	28312 1702
+65	34211	1.2	1	32097 2114
+66	43374	1.2	1	40179 3195
+67	29546	1.2	1	27827 1719
+68	42544	1.2	1	39488 3056
+69	38732	1.2	1	36331 2401
+70	21704	1.2	1	20484 1220
+71	27870	1.2	1	25530 2340
+72	24580	1.2	1	22861 1719
+73	27684	1.2	1	25549 2135
+74	25654	1.2	1	23882 1772
+75	22218	1.2	1	20763 1455
+76	27067	1.2	1	25307 1760
+77	31620	1.2	1	29125 2495
+78	37520	1.2	1	34322 3198
+79	26818	1.2	1	24898 1920
+80	26519	1.2	1	24741 1778
+81	24649	1.2	1	22531 2118
+82	21885	1.2	1	19943 1942
+83	21862	1.2	1	19843 2019
+84	23156	1.2	1	21161 1995
+85	28119	1.2	1	25775 2344
+86	26608	1.2	1	24794 1814
+87	32008	1.2	1	29954 2054
+88	32060	1.2	1	29977 2083
+89	31508	1.2	1	30106 1402
+90	29911	1.2	1	28219 1692
+91	26349	1.2	1	24734 1615
+92	22419	1.2	1	20702 1717
+93	19751	1.2	1	18185 1566
+94	23425	1.2	1	21021 2404
+95	23576	1.2	1	21674 1902
+96	28422	1.2	1	24648 3774
+97	19764	1.2	1	16890 2874
+98	24376	1.2	1	20440 3936
+99	13887	1.2	1	11109 2778
+100	14982	1.2	1	11960 3022
+101	6419	1.2	1	4655 1764
+102	1688	1.2	1	1112 576
+103	493	1.2	1	261 232
+104	706	1.2	1	410 296
+105	214	1.2	1	74 140
+106	442	1.2	1	203 239
+107	250	1.2	1	118 132
+108	225	1.2	1	63 162
+109	395	1.2	1	246 149
+110	155	1.2	1	55 100
+111	246	1.2	1	128 118
+112	442	1.2	1	285 157
+113	175	1.2	1	71 104
+114	243	1.2	1	131 112
+115	159	1.2	1	58 101
+116	134	1.2	1	45 89
+117	172	1.2	1	83 89
+118	136	1.2	1	40 96
+119	156	1.2	1	73 83
+120	212	1.2	1	87 125
+121	91	1.2	1	26 65
+122	97	1.2	1	31 66
+123	150	1.2	1	60 90
+124	77	1.2	1	12 65
+125	60	1.2	1	3 57
+126	60	1.2	1	0 60
+127	51	1.2	1	3 48
+128	63	1.2	1	0 63
+129	55	1.2	1	1 54
+130	65	1.2	1	2 63
+131	42	1.2	1	0 42
+132	59	1.2	1	1 58
+133	46	1.2	1	0 46
+134	54	1.2	1	0 54
+135	65	1.2	1	0 65
+136	37	1.2	1	0 37
+137	43	1.2	1	1 42
+138	60	1.2	1	1 59
+139	67	1.2	1	0 67
+140	49	1.2	1	0 49
+141	68	1.2	1	2 66
+142	72	1.2	1	0 72
+143	251	1.2	1	2 249
+144	42	1.2	1	0 42
+145	58	1.2	1	0 58
+146	24	1.2	1	0 24
+147	34	1.2	1	0 34
+148	102	1.2	1	1 101
+149	56	1.2	1	0 56
+150	32	1.2	1	1 31
+151	23	1.2	1	0 23
+
+RUN STATISTICS FOR INPUT FILE: /scratch/gsartonl/metagenomics/00_data/ken04_08_L2_R2_001_fwgQlJj2YXUQ.fastq.gz
+=============================================
+20080359 sequences processed in total
+The length threshold of paired-end sequences gets evaluated later on (in the validation step)
+
+Validate paired-end files ken04_08_L2_R1_001_PQCZmjo2I30B_trimmed.fq.gz and ken04_08_L2_R2_001_fwgQlJj2YXUQ_trimmed.fq.gz
+Now renaming the output files
+
+ORIGINAL FILE 1: >>ken04_08_L2_R1_001_PQCZmjo2I30B_trimmed.fq.gz<<	RENAMING TO:>>ken04_08_L2_R1_trimmed.fq.gz<<
+ORIGINAL FILE 2: >>ken04_08_L2_R2_001_fwgQlJj2YXUQ_trimmed.fq.gz<<	RENAMING TO:>>ken04_08_L2_R2_trimmed.fq.gz<<
+file_1: ken04_08_L2_R1_trimmed.fq.gz, file_2: ken04_08_L2_R2_trimmed.fq.gz
+
+
+>>>>> Now validing the length of the 2 paired-end infiles: ken04_08_L2_R1_trimmed.fq.gz and ken04_08_L2_R2_trimmed.fq.gz <<<<<
+Renaming the output files (AGAIN).
+Writing validated paired-end Read 1 reads to ken04_08_L2_val_1.fq.gz
+Writing validated paired-end Read 2 reads to ken04_08_L2_val_2.fq.gz
+
+Total number of sequences analysed: 20080359
+
+Number of sequence pairs removed because at least one read was shorter than the length cutoff (80 bp): 1552119 (7.73%)
+Number of sequence pairs removed because at least one read contained more N(s) than the specified limit of 1: 152266 (0.76%)
+
+
+  >>> Now running FastQC on the validated data ken04_08_L2_val_1.fq.gz<<<
+
+application/gzip
+Started analysis of ken04_08_L2_val_1.fq.gz
+Approx 5% complete for ken04_08_L2_val_1.fq.gz
+Approx 10% complete for ken04_08_L2_val_1.fq.gz
+Approx 15% complete for ken04_08_L2_val_1.fq.gz
+Approx 20% complete for ken04_08_L2_val_1.fq.gz
+Approx 25% complete for ken04_08_L2_val_1.fq.gz
+Approx 30% complete for ken04_08_L2_val_1.fq.gz
+Approx 35% complete for ken04_08_L2_val_1.fq.gz
+Approx 40% complete for ken04_08_L2_val_1.fq.gz
+Approx 45% complete for ken04_08_L2_val_1.fq.gz
+Approx 50% complete for ken04_08_L2_val_1.fq.gz
+Approx 55% complete for ken04_08_L2_val_1.fq.gz
+Approx 60% complete for ken04_08_L2_val_1.fq.gz
+Approx 65% complete for ken04_08_L2_val_1.fq.gz
+Approx 70% complete for ken04_08_L2_val_1.fq.gz
+Approx 75% complete for ken04_08_L2_val_1.fq.gz
+Approx 80% complete for ken04_08_L2_val_1.fq.gz
+Approx 85% complete for ken04_08_L2_val_1.fq.gz
+Approx 90% complete for ken04_08_L2_val_1.fq.gz
+Approx 95% complete for ken04_08_L2_val_1.fq.gz
+Analysis complete for ken04_08_L2_val_1.fq.gz
+
+  >>> Now running FastQC on the validated data ken04_08_L2_val_2.fq.gz<<<
+
+application/gzip
+Started analysis of ken04_08_L2_val_2.fq.gz
+Approx 5% complete for ken04_08_L2_val_2.fq.gz
+Approx 10% complete for ken04_08_L2_val_2.fq.gz
+Approx 15% complete for ken04_08_L2_val_2.fq.gz
+Approx 20% complete for ken04_08_L2_val_2.fq.gz
+Approx 25% complete for ken04_08_L2_val_2.fq.gz
+Approx 30% complete for ken04_08_L2_val_2.fq.gz
+Approx 35% complete for ken04_08_L2_val_2.fq.gz
+Approx 40% complete for ken04_08_L2_val_2.fq.gz
+Approx 45% complete for ken04_08_L2_val_2.fq.gz
+Approx 50% complete for ken04_08_L2_val_2.fq.gz
+Approx 55% complete for ken04_08_L2_val_2.fq.gz
+Approx 60% complete for ken04_08_L2_val_2.fq.gz
+Approx 65% complete for ken04_08_L2_val_2.fq.gz
+Approx 70% complete for ken04_08_L2_val_2.fq.gz
+Approx 75% complete for ken04_08_L2_val_2.fq.gz
+Approx 80% complete for ken04_08_L2_val_2.fq.gz
+Approx 85% complete for ken04_08_L2_val_2.fq.gz
+Approx 90% complete for ken04_08_L2_val_2.fq.gz
+Approx 95% complete for ken04_08_L2_val_2.fq.gz
+Analysis complete for ken04_08_L2_val_2.fq.gz
+Deleting both intermediate output files ken04_08_L2_R1_trimmed.fq.gz and ken04_08_L2_R2_trimmed.fq.gz
+
+====================================================================================================
+

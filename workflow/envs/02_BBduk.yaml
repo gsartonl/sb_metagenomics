@@ -1,0 +1,10 @@
+channels :
+  - conda-forge
+  - bioconda
+  - agbiome
+
+
+dependencies :
+  - openjdk
+  - java-jdk # =8.0.112
+  - bbtools # =37.62
