@@ -9,15 +9,14 @@ import pandas as pd
 from os.path import isfile, join
 from itertools import product
 from datetime import datetime
-# config file path
-# configfile: "doNotTouch/config.yaml"
+
 
 
 def makeDict (data, mainKey) :
     data = data.set_index(data['LANE'])
     metadata = {}
     keys = data[mainKey]
-    print(set(keys))
+    # print(set(keys))
 
     for key in set(keys) :
         subset = data[data[mainKey] == key]
@@ -30,25 +29,28 @@ def makeDict (data, mainKey) :
     return metadata
 
 ## LOADING FILES ##
-configfile: "../config/config.yaml"
-tmp_metadata = pd.read_csv(''.join(config["metadata"]))
+configfile: '../config/config.yaml'
+tmp_metadata = pd.read_csv(''.join(config['metadata']))
 
 ## PREPARING DATA ##
-config["metadata"]=makeDict(data=tmp_metadata, mainKey='Library')
-workDir =''.join(config["path"])
+config['metadata']=makeDict(data=tmp_metadata, mainKey='Library')
 
-LIBRARY=config["metadata"].keys()
+workDir = config['working_directory']
+path_assemblies = workDir + config['assembly']['outDir']
+path_binning = workDir + config['binning']['binning']
+path_index = config['binning']['index']
+LIBRARY=config['metadata'].keys()
 
 
 
 
 
-pathRaw="/scratch/gsartonl/metagenomics/00_data"
-pathTrimmed=workDir + ''.join(config["Preprocessing"]["trimGalore"])
-pathNoHost=workDir + ''.join(config["Preprocessing"]["hostRemoved"])
+pathRaw='/scratch/gsartonl/metagenomics/00_data'
+pathTrimmed=workDir + ''.join(config['Preprocessing']['trimGalore'])
+pathNoHost=workDir + ''.join(config['Preprocessing']['hostRemoved'])
 pathHostGenome=''.join(config['HostGenome'])
-pathIndex=''.join(config['Index'])
-minlen_scaffold_trimming=''.join(config['scaffoldFiltering'])
+
+
 #print(pathTrimmed)
 #print(LIBRARY)
 #print(workDir + ''.join(config['assembly']['outDir'])+ "/{LIBRARY}/scaffolds.fasta")
@@ -68,17 +70,18 @@ rule all:
             pathTrimmed + f"/{lib}_L{lane}_val_1.fq.gz"
             for lib in LIBRARY
             for lane in get_lanes_for_batch(lib)],
-        mergedFWD_Lanes= expand(pathTrimmed + "/merged/{LIBRARY}_R1_merged.fq", LIBRARY=LIBRARY)
+        mergedFWD_Lanes= expand(pathTrimmed + "/merged/{LIBRARY}_R1_merged.fq", LIBRARY=LIBRARY),
         #FWD=expand(pathNoHost + "/{LIBRARY}/{LIBRARY}_R1_noHost.fq", LIBRARY=LIBRARY),
-    #    FWDnorm=expand(pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R1_Normalized.fq", LIBRARY=LIBRARY),
-    # # # assembly
-    #    assemblyMeta=expand("03_assembly/Metaspades/{LIBRARY}/scaffolds.fasta", LIBRARY=LIBRARY),
-    #   assemblyNorm=expand("03_assembly/Norm/{LIBRARY}/scaffolds.fasta", LIBRARY=LIBRARY),
-    #    assemblyMega=expand("03_assembly/MEGAHIT/{LIBRARY}/{LIBRARY}.contigs.fa", LIBRARY=LIBRARY),
+        FWDnorm=expand(pathTrimmed + "/normalized/reads/{LIBRARY}/{LIBRARY}_R1_normalized.fq", LIBRARY=LIBRARY),
 
-    # # # assembly filtering
-    #    assemblyFiltered=expand('03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta', LIBRARY=LIBRARY),
-    #    stats=expand("03_assembly/03_stats/{LIBRARY}/{LIBRARY}_assemblies_scaffolds_min1000bp.stats", LIBRARY=LIBRARY),
+    # # # assembly
+        assemblyNorm=expand(path_assemblies + '/metaspades/{LIBRARY}/scaffolds.fasta', LIBRARY=LIBRARY),
+
+    # # # assembly filtering LIBRARY=['CM1', 'Mfe3-9']
+        assemblyFiltered=expand(path_assemblies +'/metaspades/{LIBRARY}/{LIBRARY}_scaffolds_filtered.fasta', LIBRARY=LIBRARY),
+        stats=expand(path_assemblies + '/stats/{LIBRARY}_assembly_stats_min1000bp.txt', LIBRARY=LIBRARY),
+        index=expand(path_index + '/{LIBRARY}/{LIBRARY}_index.amb', LIBRARY=LIBRARY),
+        alignment=expand(path_assemblies + 'stats/{LIBRARY}/{LIBRARY}_read_mapping.bam', LIBRARY=['CM1', 'Mfe3-9'])
     #    mappedNorm= expand("03_assembly/03_stats/{LIBRARY}_readMappingNorm.txt", LIBRARY=LIBRARY),
     #    mappedNorm= expand("03_assembly/03_stats/{LIBRARY}/{LIBRARY}_readMapping.txt", LIBRARY=LIBRARY),
     #    mappedMEGA = expand("03_assembly/03_stats/{LIBRARY}/{LIBRARY}_MEGAHIT_readMappingNorm.txt", LIBRARY=LIBRARY),
@@ -88,9 +91,7 @@ rule all:
     #     #annotation=expand('04_GeneCatalogue/{LIBRARY}_MEGAHIT_prokka/',LIBRARY=LIBRARY),
     #     #annotationMega=expand('04_GeneCatalogue/{LIBRARY}_MEGAHIT_meta/',LIBRARY=LIBRARY),
     # # # mapping
-    #     indexNorm=expand('03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta.amb', LIBRARY=LIBRARY),
-    #     indexMEGA=expand('03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta.amb', LIBRARY=LIBRARY),
-    #     #
+
     #     alignmentNorm=expand("/scratch/gsartonl/alignments/norm/{samples}_mapped_to_{LIBRARY}.bam", samples=LIBRARY, LIBRARY=LIBRARY),
     #     alignment=expand("/scratch/gsartonl/alignments/MEGAHIT/{samples}_mapped_to_{LIBRARY}.bam", samples=LIBRARY, LIBRARY=LIBRARY),
     #     #alignmentNorm=expand("05_MAG_building/01_mapping/Norm/{samples}_mapped_to_{LIBRARY}.bam", samples=LIBRARY, LIBRARY=LIBRARY),
@@ -113,9 +114,10 @@ def merge_readsFWD_input(wildcards) :
     library_data = config['metadata'][wildcards.LIBRARY]
     lanes = library_data["lanes"]
 
-
     if len(lanes) == 1 :
         LANES = [2]
+        if wildcards.LIBRARY == "Mfe3-8":
+            LANES=[1]
     else :
         LANES = lanes
 
@@ -126,26 +128,11 @@ def merge_readsFWD_input(wildcards) :
     return merge_dict # dict key:input_name val:path
 
 LIBRARY=config["metadata"].keys()
-print(LIBRARY)
-
-
-# rule fastqc :
-#     input:
-#         rawReads=expand("00_Raw_Data/untouched/{sample}", sample=SAMPLES)
-#     output:
-#         html=expand("00_Raw_Data/fastqc_raw/{sample}.html", sample=SAMPLES),
-#         zip=expand("00_Raw_Data/fastqc_raw/{sample}_fastqc.zip", sample=SAMPLES)
-#     params: "--quiet"
-#     log:
-#         expand("logs/00_fastcq/fastqc_{sample}.log", sample=SAMPLES)
-#     threads: 3
-#     shell:
-#         "fastqc {input.rawReads} -o 00_Raw_Data/fastqc_raw"
-
-#print(config["Preprocessing"])
-
+# print(LIBRARY)
+# print(config["metadata"]['Mfe3-8'])
+# print(get_lanes_for_batch('Mfe3-8'))
 #### Preprocessing ####
-rule ReadTrimming:
+rule read_trimming:
     input:
         GetPaired_input
     output:
@@ -178,7 +165,7 @@ rule ReadTrimming:
         #scripts/01_trimGalore.sh {input} {params.inDir} {params.outDir} > {log}
 
 
-rule mergeReadsFiles:
+rule merge_reads_files:
     input:
         unpack(merge_readsFWD_input)
     output:
@@ -189,7 +176,7 @@ rule mergeReadsFiles:
         mailto="garance.sarton-loheac@unil.ch",
         mailtype="BEGIN,END,FAIL,TIME_LIMIT_80",
         jobname="{LIBRARY}_merging_lanes"
-     resources:
+    resources:
         runtime_s="1200"
     threads: 8
     message:"Merging the reads"
@@ -198,42 +185,42 @@ rule mergeReadsFiles:
         "mkdir -p {params.outDir} ; zcat {input.pathToFWD}  > {output.mergedFWD_Lanes} ; zcat {input.pathToREV} > {output.mergedREV_Lanes}"
 
 
-rule removeHostReads :
-    input :
-        FWD= pathTrimmed + "/merged/{LIBRARY}_R1_merged.fq",
-        REV= pathTrimmed + "/merged/{LIBRARY}_R2_merged.fq"
-    output :
-        FWD= pathNoHost + "/noHost/{LIBRARY}/{LIBRARY}_R1_noHost.fq",
-        REV= pathNoHost + "/noHost/{LIBRARY}/{LIBRARY}_R2_noHost.fq",
-        hostMapped= pathNoHost + "/noHost/{LIBRARY}_HostMapped.fq"
-    params:
-        refGenome=pathHostGenome,
-        pathIndex=pathIndex,
-        mailto="garance.sarton-loheac@unil.ch",
-        mailtype="BEGIN,END,FAIL,TIME_LIMIT_80",
-        jobname="{LIBRARY}_removeHostReads"
-    resources:
-        account='pengel_spirit',
-        runtime_s="3600",
-        mem_mb=lambda wildcards, attempt:30000+attempt*1000
-    threads: 20
-    message:"Filtering host reads"
-    #conda:
-    #    "envs/02_BBduk.yaml"
-    log: "logs/02_HostReads/removeHostReads_{LIBRARY}"
-    benchmark: "logs/benchmark/02_removeHost/{LIBRARY}_removeHost.benchmark"
-    shell:
-        "scripts/02_removeHostReads.sh {input.FWD} {input.REV} {output.FWD} {output.REV} {output.hostMapped} {params.refGenome} {params.pathIndex}"
+# rule removeHostReads :
+#     input :
+#         FWD= pathTrimmed + "/merged/{LIBRARY}_R1_merged.fq",
+#         REV= pathTrimmed + "/merged/{LIBRARY}_R2_merged.fq"
+#     output :
+#         FWD= pathNoHost + "/noHost/{LIBRARY}/{LIBRARY}_R1_noHost.fq",
+#         REV= pathNoHost + "/noHost/{LIBRARY}/{LIBRARY}_R2_noHost.fq",
+#         hostMapped= pathNoHost + "/noHost/{LIBRARY}_HostMapped.fq"
+#     params:
+#         refGenome=pathHostGenome,
+#         path_index=path_index,
+#         mailto="garance.sarton-loheac@unil.ch",
+#         mailtype="BEGIN,END,FAIL,TIME_LIMIT_80",
+#         jobname="{LIBRARY}_removeHostReads"
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="3600",
+#         mem_mb=lambda wildcards, attempt:30000+attempt*1000
+#     threads: 20
+#     message:"Filtering host reads"
+#     #conda:
+#     #    "envs/02_BBduk.yaml"
+#     log: "logs/02_HostReads/removeHostReads_{LIBRARY}"
+#     benchmark: "logs/benchmark/02_removeHost/{LIBRARY}_removeHost.benchmark"
+#     shell:
+#         "scripts/02_removeHostReads.sh {input.FWD} {input.REV} {output.FWD} {output.REV} {output.hostMapped} {params.refGenome} {params.pathIndex}"
 
-rule NormalizeReads :
+rule normalize_reads :
     input :
         FWD= pathTrimmed + "/merged/{LIBRARY}_R1_merged.fq",
         REV= pathTrimmed + "/merged/{LIBRARY}_R2_merged.fq"
     output :
-        FWD= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R1_Normalized.fq",
-        REV= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R2_Normalized.fq",
-        Histogram= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_Kmer.hist",
-        peaks= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_peaks.txt"
+        FWD= pathTrimmed + "/normalized/reads/{LIBRARY}/{LIBRARY}_R1_normalized.fq",
+        REV= pathTrimmed + "/normalized/reads/{LIBRARY}/{LIBRARY}_R2_normalized.fq",
+        Histogram= pathTrimmed + "/normalized/fig/{LIBRARY}/{LIBRARY}_Kmer.hist",
+        peaks= pathTrimmed + "/normalized/fig/{LIBRARY}/{LIBRARY}_peaks.txt"
     params:
         mailto="garance.sarton-loheac@unil.ch",
         mailtype="BEGIN,END,FAIL,TIME_LIMIT_80",
@@ -241,246 +228,288 @@ rule NormalizeReads :
     resources:
         account='pengel_spirit',
         runtime_s="3600",
-        mem_mb=lambda wildcards, attempt:800000+attempt*1000
-    threads: 30
+        mem_mb=lambda wildcards, attempt:110000+attempt*1000
+    threads: 20
     message:"Normalization"
-    log: "logs/02_HostReads/normalizeReads_{LIBRARY}"
+    log: "logs/02_HostReads/normalizeReads_{LIBRARY}.txt"
     benchmark: "logs/benchmark/02_removeHost/{LIBRARY}_normalization.benchmark"
     conda: "envs/02_BBduk.yaml"
     shell:
-        "scripts/02_normalizeReads.sh {input.FWD} {input.REV} {output.FWD} {output.REV} {output.Histogram} {output.peaks}"
+        """
+        module load gcc openjdk/17.0.8.1_1
+        bbnorm.sh -Xmx100G threads=20 in1={input.FWD} in2={input.REV} out1={output.FWD} out2={output.REV} target=40 mindepth=0 hist={output.Histogram} peaks={output.peaks}  2> {log} 
+        """
 
 
 ### Read Assembly ###
-rule assemblyMetaspades:
+rule assembly_metaspades:
     input:
-        FWD= pathNoHost + "/noHost/{LIBRARY}/{LIBRARY}_R1_noHost.fq",
-        REV= pathNoHost + "/noHost/{LIBRARY}/{LIBRARY}_R2_noHost.fq"
+        FWD= pathTrimmed + "/normalized/reads/{LIBRARY}/{LIBRARY}_R1_normalized.fq",
+        REV= pathTrimmed + "/normalized/reads/{LIBRARY}/{LIBRARY}_R2_normalized.fq"
     output:
-        outdir=directory(workDir + ''.join(config['assembly']['outDir'])+ "/Metaspades/{LIBRARY}"),
-        assembly="03_assembly/Metaspades/{LIBRARY}/scaffolds.fasta"
+        assembly=path_assemblies +"/metaspades/{LIBRARY}/scaffolds.fasta"
     params:
-        inDir=pathTrimmed + '/merged',
+        tmp_dir="/scratch/gsartonl/metagenomics/"
     resources:
         account='pengel_spirit',
-        runtime_s="86400", # = 24h
-        mem_mb=lambda wildcards, attempt:700000+attempt*10000
+        runtime_s="86400", # = 24h      
+        mem_mb=lambda wildcards, attempt:250000+attempt*10000
     threads: 16
-    log: "logs/03_assembly/{LIBRARY}_assembly"
+    log: "logs/03_assembly/{LIBRARY}_assembly.txt"
     benchmark: "logs/benchmark/03_assembly/{LIBRARY}_assembly.benchmark"
     conda: "envs/03_SPAdes.yaml"
     shell:
-        "scripts/03_a1_metaspades.sh {output.outdir} {input.FWD} {input.REV} {resources.mem_mb}"
-
-rule assemblyNorm:
-    input:
-        FWD= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R1_Normalized.fq",
-        REV= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R2_Normalized.fq"
-    output:
-        outdir=directory(workDir + ''.join(config['assembly']['outDir'])+ "/Norm/{LIBRARY}"),
-        scaffolds="03_assembly/Norm/{LIBRARY}/scaffolds.fasta"
-    params:
-        inDir=pathTrimmed + '/merged',
-    resources:
-        account='pengel_spirit',
-        runtime_s="86400",
-        mem_mb=lambda wildcards, attempt:700000+attempt*10000
-    threads: 30
-    message:"Metaspades assembly"
-    log: "logs/03_assembly/{LIBRARY}_assemblyNorm"
-    benchmark: "logs/benchmark/03_assembly/{LIBRARY}_assemblyNorm.benchmark"
-    conda: "envs/03_SPAdes.yaml"
-    shell:
-        "scripts/03_a1_metaspades.sh {output.outdir} {input.FWD} {input.REV} {resources.mem_mb}"
-
-rule assemblyMegahit:
-    input:
-        FWD= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R1_Normalized.fq",
-        REV= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R2_Normalized.fq"
-    output:
-        outdir=directory(workDir + ''.join(config['assembly']['outDir'])+ "/MEGAHIT/{LIBRARY}"),
-        outfile='03_assembly/MEGAHIT/{LIBRARY}/{LIBRARY}.contigs.fa'
-    params:
-        inDir=pathTrimmed + '/merged',
-        LIBRARY='{LIBRARY}',
-    resources:
-        account='pengel_spirit',
-        runtime_s="86400",
-        mem_mb=lambda wildcards, attempt:700000+attempt*10000
-    threads: 20
-    message:"MEGAHIT assembly"
-    log: "logs/03_assembly/{LIBRARY}_assemblyMEGAHIT"
-    benchmark: "logs/benchmark/03_assembly/{LIBRARY}_assemblyMEGAHIT.benchmark"
-    conda: "envs/03_SPAdes.yaml"
-    shell:
-        "scripts/03_a2_MEGAHIT.sh {output.outdir} {input.FWD} {input.REV} {threads} {params.LIBRARY}"
+        """
+        exec 2> {log}
+	    mkdir -p $(dirname {output.assembly});
+        spades.py --meta -o $(dirname {output.assembly}) -1 {input.FWD} -2 {input.REV} -t {threads} -m 250 --only-assembler --tmp-dir {params.tmp_dir};
+        """
+# Not used
+# rule assemblyNorm:
+#     input:
+#         FWD= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R1_Normalized.fq",
+#         REV= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R2_Normalized.fq"
+#     output:
+#         outdir=directory(workDir + ''.join(config['assembly']['outDir'])+ "/Norm/{LIBRARY}"),
+#         scaffolds="03_assembly/Norm/{LIBRARY}/scaffolds.fasta"
+#     params:
+#         inDir=pathTrimmed + '/merged',
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="86400",
+#         mem_mb=lambda wildcards, attempt:700000+attempt*10000
+#     threads: 30
+#     message:"Metaspades assembly"
+#     log: "logs/03_assembly/{LIBRARY}_assemblyNorm"
+#     benchmark: "logs/benchmark/03_assembly/{LIBRARY}_assemblyNorm.benchmark"
+#     conda: "envs/03_SPAdes.yaml"
+#     shell:
+#         "scripts/03_a1_metaspades.sh {output.outdir} {input.FWD} {input.REV} {resources.mem_mb}"
+# Not used
+# rule assemblyMegahit:
+#     input:
+#         FWD= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R1_Normalized.fq",
+#         REV= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R2_Normalized.fq"
+#     output:
+#         outdir=directory(workDir + ''.join(config['assembly']['outDir'])+ "/MEGAHIT/{LIBRARY}"),
+#         outfile='03_assembly/MEGAHIT/{LIBRARY}/{LIBRARY}.contigs.fa'
+#     params:
+#         inDir=pathTrimmed + '/merged',
+#         LIBRARY='{LIBRARY}',
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="86400",
+#         mem_mb=lambda wildcards, attempt:700000+attempt*10000
+#     threads: 20
+#     message:"MEGAHIT assembly"
+#     log: "logs/03_assembly/{LIBRARY}_assemblyMEGAHIT"
+#     benchmark: "logs/benchmark/03_assembly/{LIBRARY}_assemblyMEGAHIT.benchmark"
+#     conda: "envs/03_SPAdes.yaml"
+#     shell:
+#         "scripts/03_a2_MEGAHIT.sh {output.outdir} {input.FWD} {input.REV} {threads} {params.LIBRARY}"
 
 ## Scaffold filtering 
 
-rule scaffoldFiltering:
+rule scaffold_filtering:
     input:
-        assembly="03_assembly/Norm/{LIBRARY}/scaffolds.fasta", #'03_assembly/{LIBRARY}/scaffolds.fasta',
-        assemblyNorm='03_assembly/MEGAHIT/{LIBRARY}/{LIBRARY}.contigs.fa'
+        assembly=path_assemblies +'/metaspades/{LIBRARY}/scaffolds.fasta'
     output:
-        assemblyFiltered='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta',
-        assemblyNormFiltered='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta'#'03_assembly/02_scaffoldsFiltered/{LIBRARY}_MEGAHIT/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta'
+        assemblyFiltered=path_assemblies + '/metaspades/{LIBRARY}/{LIBRARY}_scaffolds_filtered.fasta'
     params:
-        minlen=minlen_scaffold_trimming
+        minlen_scaffold=config['scaffoldFiltering']['length'],
+        mincov_scaffold=config['scaffoldFiltering']['coverage']
     resources:
         account='pengel_spirit',
-        runtime_s="600",
+        runtime_s='600',
         mem_mb=lambda wildcards, attempt:700+attempt*10000
     threads: 1
-    message: "Filtering Scaffolds <1000bp"
-    log: "logs/03_assembly/{LIBRARY}_scaffoldFiltering_1000bp"
-    benchmark: "logs/benchmark/03_assembly/{LIBRARY}_scaffoldFiltering_1000bp.benchmark"
+    message: 'Filtering out scaffolds <1000bp <1 Cov'
+    log: 'logs/03_assembly/{LIBRARY}_scaffoldFiltering.txt'
+    benchmark: 'logs/benchmark/03_assembly/{LIBRARY}_scaffoldFiltering.benchmark'
+    conda: 'envs/03_assemblyStats.yaml'
     shell:
-        "scripts/03_a2_scaffoldFiltering.sh {input.assembly} {input.assemblyNorm} {output.assemblyFiltered} {output.assemblyNormFiltered} {params.minlen}"
+        """
+        python3 scripts/03_scaffold_filtering.py -i {input.assembly} -o {output.assemblyFiltered} -l {params.minlen_scaffold} -c {params.mincov_scaffold} &> {log}
+        """
 
 
-rule assemblyStats:
+rule assembly_stats:
     input:
-        assembly='03_assembly/Metaspades/{LIBRARY}/scaffolds.fasta',
-        assemblyNorm='03_assembly/Norm/{LIBRARY}/scaffolds.fasta',
-        assemblyMEGA='03_assembly/MEGAHIT/{LIBRARY}/{LIBRARY}.contigs.fa',
-        assemblyFiltered='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta',
-        assemblyFilteredNormCov='03_assembly/02_scaffoldsFiltered/Norm_{LIBRARY}/Norm_{LIBRARY}_scaffolds_min1000bpCov1.fasta',
-        assemblyFilteredMEGA='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta'
+        assembly=path_assemblies +'/metaspades/{LIBRARY}/scaffolds.fasta',
+        assemblyFiltered=path_assemblies + '/metaspades/{LIBRARY}/{LIBRARY}_scaffolds_filtered.fasta'
     output:
-        #hist='03_assembly/03_stats/{LIBRARY}_scaffoldsLenHist.pdf'
-        stats='03_assembly/03_stats/{LIBRARY}/{LIBRARY}_assemblies_scaffolds_min1000bp.stats'
+        #hist='03_assembly/stats/{LIBRARY}_scaffoldsLenHist.pdf'
+        stats=path_assemblies + '/stats/{LIBRARY}_assembly_stats_min1000bp.txt'
         #statsNorm='03_assembly/03_stats/{LIBRARY}_norm/{LIBRARY}_norm_scaffolds_min500bp.stats'
     params:
-        minlen=minlen_scaffold_trimming
+        minlen_scaffold=''.join(config['scaffoldFiltering']['length'])
     resources:
         account='pengel_spirit',
         runtime_s="2400",
         mem_mb=lambda wildcards, attempt:1000+attempt*10000
     threads: 1
-    message:"Computing assembly stats"
-    log: "logs/03_assembly/{LIBRARY}_assemblyStats"
-    benchmark: "logs/benchmark/03_assembly/{LIBRARY}_assemblyStats.benchmark"
-    conda:
-        "envs/03_assemblyStats.yaml"
+    message:'Computing assembly stats'
+    log: 'logs/03_assembly/{LIBRARY}_assemblyStats'
+    benchmark: 'logs/benchmark/03_assembly/{LIBRARY}_assemblyStats.benchmark'
+    conda:'envs/03_assemblyStats.yaml'
     shell:
-        "scripts/03_a3_assemblyStats.sh {input} {output}"
+        """
+        assembly-stats -l {params.minlen_scaffold} -t {input} > {output.stats} ;
+        """
 
+## backmapping and binning:
 
-rule readMapping:
+rule build_bwa_index:
     input:
-      assemblyFiltered='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta',
-      FWDtrim=pathTrimmed + "/merged/{LIBRARY}_R1_merged.fq",
-      REVtrim=pathTrimmed + "/merged/{LIBRARY}_R2_merged.fq"
+        scaffolds = path_assemblies + '/metaspades/{LIBRARY}/{LIBRARY}_scaffolds_filtered.fasta'
     output:
-      sam= "03_assembly/03_stats/{LIBRARY}/{LIBRARY}_assembly.sam",
-      bam= "03_assembly/03_stats/{LIBRARY}/{LIBRARY}_assembly.ordered.bam",
-      mapped= "03_assembly/03_stats/{LIBRARY}/{LIBRARY}_readMapping.txt"
+        bwa_index = multiext(path_index + '/{LIBRARY}/{LIBRARY}_index', '.amb', '.ann', '.bwt', '.pac', '.sa'),
+    params:
+        mailto = 'garance.sarton-loheac@unil.ch',
+        mailtype = 'BEGIN,END,FAIL,TIME_LIMIT_80',
+        jobname = 'build_bwa_index',
+        account = 'pengel_spirit',
+        index_dir = config['binning']['index'] + '/{LIBRARY}/',
+        index_prefix = config['binning']['index'] + '/{LIBRARY}/{LIBRARY}_index'
+        
     resources:
-        account='pengel_spirit',
-        runtime_s="12000", #10h
-        mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
+        runtime_s= 600, #10min
+        mem_mb = 8000
     threads: 4
-    message: "Mapping trimmed reads to the assembly"
-    log: "logs/03_assembly/{LIBRARY}_readMapping"
-    benchmark: "logs/benchmark/03_assembly/{LIBRARY}_readMapping.benchmark"
-    conda:
-        "envs/03_assemblyStats.yaml"
+    log: 'logs/04_binning/{LIBRARY}/{LIBRARY}_build_bwa_index.txt'
+    benchmark: 'logs/benchmark/04_binning/{LIBRARY}/{LIBRARY}_build_bwa_index.benchmark'
+    conda: 'envs/03_read_mapping.yaml'
     shell:
-        "scripts/03_a4_readMapping.sh {input} {threads} {output}"
+        """
+        mkdir -p {params.index_dir}
+        bwa index -p  {params.index_prefix} {input.scaffolds} &>> {log}
+        """
 
-rule readMappingMEGA:
+
+
+rule read_mapping:
     input:
-      assembly='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta',
-      FWD= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R1_Normalized.fq",
-      REV= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R2_Normalized.fq"
+        scaffold = path_assemblies + '/metaspades/{LIBRARY}/{LIBRARY}_scaffolds_filtered.fasta',
+        FWD = pathTrimmed + '/merged/{LIBRARY}_R1_merged.fq',
+        REV = pathTrimmed + '/merged/{LIBRARY}_R2_merged.fq'
     output:
-      sam= "03_assembly/03_stats/{LIBRARY}/{LIBRARY}_MEGAHIT_assemblyNorm.sam",
-      bam= "03_assembly/03_stats/{LIBRARY}/{LIBRARY}_MEGAHIT_assemblyNorm.ordered.bam",
-      mapped= "03_assembly/03_stats/{LIBRARY}/{LIBRARY}_MEGAHIT_readMappingNorm.txt"
+        sam = path_assemblies + 'stats/{LIBRARY}/{LIBRARY}_assembly.sam',
+        bam = path_assemblies + 'stats/{LIBRARY}/{LIBRARY}_assembly.ordered.bam',
+        mapped = path_assemblies + 'stats/{LIBRARY}/{LIBRARY}_read_mapping.bam',
+        flagstat = path_assemblies + 'stats/{LIBRARY}/{LIBRARY}_flagstats.tsv'
+    params:
+        index_prefix = config['binning']['index'] + '/{LIBRARY}/{LIBRARY}_index'
     resources:
-        account='pengel_spirit',
-        runtime_s="12000", #10h
-        mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
+        account = 'pengel_spirit',
+        runtime_s = '12000', #10h
+        mem_mb = lambda wildcards, attempt:10000+attempt*10000 #10G
+
     threads: 4
-    message: "Mapping trimmed normalized-reads to the assembly"
-    log: "logs/03_assembly/{LIBRARY}_MEGAHIT_normReadMapping"
-    benchmark: "logs/benchmark/03_assembly/{LIBRARY}_MEGAHIT_normReadMapping.benchmark"
-    conda:
-        "envs/03_assemblyStats.yaml"
+    message: 'Mapping trimmed reads to the assembly'
+    log: 'logs/04_binning/{LIBRARY}/{LIBRARY}_read_mapping.txt'
+    benchmark: 'logs/benchmark/04_binning/{LIBRARY}/{LIBRARY}_read_mapping.benchmark'
+    conda: 'envs/03_read_mapping.yaml'
     shell:
-        "scripts/03_a4_readMapping.sh {input} {threads} {output}"
+        """
+        bwa mem -a -t {threads} {params.index_prefix} {input.scaffold} {input.FWD} {input.REV} | /
+        samtools view -h -F 4 - | samtools sort -0 bam -@ {threads} > {output.mapped} ;
+        samtools flagstat -O tsv -@ {threads} {output.mapped} > {output.flagstat}
 
-rule GeneCatalog:
-    input:
-        assemblyFiltered='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta'
-    output:
-        annotation=directory('04_GeneCatalogue/{LIBRARY}_MEGAHIT_prokka/')
-    params:
-        locustag="{LIBRARY}"
-    resources:
-        account='pengel_spirit',
-        runtime_s="100600", # 4h
-        mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
-    threads: 16
-    message:"Prokka annotations"
-    log: "logs/04_GeneCatalogue/{LIBRARY}_MEGAHIT_annotation_pokka"
-    benchmark: "logs/benchmark/04_GeneCatalogue/{LIBRARY}_MEGAHIT_annotation_prokka.benchmark"
-    conda:
-        "envs/04_annotation.yaml"
-    shell:
-        "scripts/04_annotation_prokka.sh {input.assemblyFiltered} {output.annotation} {params.locustag}"
+        """
 
-rule GeneCatalogMeta:
-    input:
-        assemblyFiltered='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta'#'03_assembly/02_scaffoldsFiltered/{LIBRARY}_MEGAHIT/final.contigs.fa'
-    output:
-        annotation=directory('04_GeneCatalogue/{LIBRARY}_MEGAHIT_meta/')
-    params:
-        locustag="{LIBRARY}"
-    resources:
-        account='pengel_spirit',
-        runtime_s="14400", #  1h 31m 21s for CM1
-        mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
-    threads: 16
-    message:"metaProkka annotations"
-    log: "logs/04_GeneCatalogue/{LIBRARY}_annotation_metapokka_megahit"
-    benchmark: "logs/benchmark/04_GeneCatalogue/{LIBRARY}_annotation_metaprokka_megahit.benchmark"
-    conda:
-        "envs/04_annotation.yaml"
-    shell:
-        "scripts/04_annotation_metaprokka.sh {input.assemblyFiltered} {output.annotation} {params.locustag}"
+# rule readMappingMEGA:
+#     input:
+#       assembly='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta',
+#       FWD= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R1_Normalized.fq",
+#       REV= pathNoHost + "/Norm/{LIBRARY}/{LIBRARY}_R2_Normalized.fq"
+#     output:
+#       sam= "03_assembly/03_stats/{LIBRARY}/{LIBRARY}_MEGAHIT_assemblyNorm.sam",
+#       bam= "03_assembly/03_stats/{LIBRARY}/{LIBRARY}_MEGAHIT_assemblyNorm.ordered.bam",
+#       mapped= "03_assembly/03_stats/{LIBRARY}/{LIBRARY}_MEGAHIT_readMappingNorm.txt"
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="12000", #10h
+#         mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
+#     threads: 4
+#     message: "Mapping trimmed normalized-reads to the assembly"
+#     log: "logs/03_assembly/{LIBRARY}_MEGAHIT_normReadMapping"
+#     benchmark: "logs/benchmark/03_assembly/{LIBRARY}_MEGAHIT_normReadMapping.benchmark"
+#     conda:
+#         "envs/03_assemblyStats.yaml"
+#     shell:
+#         "scripts/03_a4_readMapping.sh {input} {threads} {output}"
 
-rule GeneCatalogMeta2:
-    input:
-        assemblyFiltered='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta'#'03_assembly/02_scaffoldsFiltered/{LIBRARY}_MEGAHIT/final.contigs.fa'
-    output:
-        annotation=directory('04_GeneCatalogue/{LIBRARY}_meta/')
-    params:
-        locustag="{LIBRARY}"
-    resources:
-        account='pengel_spirit',
-        runtime_s="14400", #  1h 31m 21s for CM1
-        mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
-    threads: 16
-    message:"metaProkka annotations"
-    log: "logs/04_GeneCatalogue/{LIBRARY}_annotation_metapokka_norm"
-    benchmark: "logs/benchmark/04_GeneCatalogue/{LIBRARY}_annotation_metaprokka_norm.megahit.benchmark"
-    conda:
-        "envs/04_annotation.yaml"
-    shell:
-        "scripts/04_annotation_metaprokka.sh {input.assemblyFiltered} {output.annotation} {params.locustag}"
+# rule GeneCatalog:
+#     input:
+#         assemblyFiltered='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta'
+#     output:
+#         annotation=directory('04_GeneCatalogue/{LIBRARY}_MEGAHIT_prokka/')
+#     params:
+#         locustag="{LIBRARY}"
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="100600", # 4h
+#         mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
+#     threads: 16
+#     message:"Prokka annotations"
+#     log: "logs/04_GeneCatalogue/{LIBRARY}_MEGAHIT_annotation_pokka"
+#     benchmark: "logs/benchmark/04_GeneCatalogue/{LIBRARY}_MEGAHIT_annotation_prokka.benchmark"
+#     conda:
+#         "envs/04_annotation.yaml"
+#     shell:
+#         "scripts/04_annotation_prokka.sh {input.assemblyFiltered} {output.annotation} {params.locustag}"
+
+# rule GeneCatalogMeta:
+#     input:
+#         assemblyFiltered='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta'#'03_assembly/02_scaffoldsFiltered/{LIBRARY}_MEGAHIT/final.contigs.fa'
+#     output:
+#         annotation=directory('04_GeneCatalogue/{LIBRARY}_MEGAHIT_meta/')
+#     params:
+#         locustag="{LIBRARY}"
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="14400", #  1h 31m 21s for CM1
+#         mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
+#     threads: 16
+#     message:"metaProkka annotations"
+#     log: "logs/04_GeneCatalogue/{LIBRARY}_annotation_metapokka_megahit"
+#     benchmark: "logs/benchmark/04_GeneCatalogue/{LIBRARY}_annotation_metaprokka_megahit.benchmark"
+#     conda:
+#         "envs/04_annotation.yaml"
+#     shell:
+#         "scripts/04_annotation_metaprokka.sh {input.assemblyFiltered} {output.annotation} {params.locustag}"
+
+# rule GeneCatalogMeta2:
+#     input:
+#         assemblyFiltered='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta'#'03_assembly/02_scaffoldsFiltered/{LIBRARY}_MEGAHIT/final.contigs.fa'
+#     output:
+#         annotation=directory('04_GeneCatalogue/{LIBRARY}_meta/')
+#     params:
+#         locustag="{LIBRARY}"
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="14400", #  1h 31m 21s for CM1
+#         mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
+#     threads: 16
+#     message:"metaProkka annotations"
+#     log: "logs/04_GeneCatalogue/{LIBRARY}_annotation_metapokka_norm"
+#     benchmark: "logs/benchmark/04_GeneCatalogue/{LIBRARY}_annotation_metaprokka_norm.megahit.benchmark"
+#     conda:
+#         "envs/04_annotation.yaml"
+#     shell:
+#         "scripts/04_annotation_metaprokka.sh {input.assemblyFiltered} {output.annotation} {params.locustag}"
 
 # rule GeneDereplication:
 #     input:
 #       FNA=expand(04_GeneCatalogue/{LIBRARY}_meta/{LIBRARY}.fna),
 #       FAA=expand(04_GeneCatalogue/{LIBRARY}_meta/{LIBRARY}.fna)
-#
+
 #     output:
 #       FNA_catalog=temporary()
 #       FAA_catalog=temporary()
-#
+
 #     params:
-#
+
 #     resources:
 #         account='pengel_spirit',
 #         runtime_s="12000", #10h
@@ -496,230 +525,230 @@ rule GeneCatalogMeta2:
 
 
 
-rule bwaIndexing:
-    input:
-      scaffoldsNorm='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta',
-      scaffoldsMEGA='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta'
-    output:
-      indexNorm='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta.amb',
-      indexMEGA='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta.amb'
-    resources:
-        account='pengel_spirit',
-        runtime_s="12000", #10h
-        mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
-    threads: 10
-    message: "bwa indexing"
-    log: "logs/05_MAG_building/01_indexing_{LIBRARY}"
-    benchmark: "logs/benchmark/05_MAG_building/01_Trimmedindexing_{LIBRARY}.benchmark"
-    conda:
-        "envs/03_assemblyStats.yaml"
-    shell:
-        """
-        bwa index {input.scaffoldsNorm}
-        bwa index {input.scaffoldsMEGA}
-        """
-    #         
+# rule bwaIndexing:
+#     input:
+#       scaffoldsNorm='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta',
+#       scaffoldsMEGA='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta'
+#     output:
+#       indexNorm='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta.amb',
+#       indexMEGA='03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta.amb'
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="12000", #10h
+#         mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
+#     threads: 10
+#     message: "bwa indexing"
+#     log: "logs/05_MAG_building/01_indexing_{LIBRARY}"
+#     benchmark: "logs/benchmark/05_MAG_building/01_Trimmedindexing_{LIBRARY}.benchmark"
+#     conda:
+#         "envs/03_assemblyStats.yaml"
+#     shell:
+#         """
+#         bwa index {input.scaffoldsNorm}
+#         bwa index {input.scaffoldsMEGA}
+#         """
+#     #         
 
 
-rule MapReadsAllVSAllNorm:
-    input:
-      scaffoldsFiltered="03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta"
-    output:
-        alignment=expand("/scratch/gsartonl/alignments/norm/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
-        #alignment=expand("05_MAG_building/01_mapping/Norm/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY),
-      #tmpAlnFWD=temp(expand("/scratch/gsartonl/alignments/norm/{sample}_mapped_to_{{LIBRARY}}.1.bam", sample=LIBRARY)),
-      #tmpAlnREV=temp(expand("/scratch/gsartonl/alignments/norm/{sample}_mapped_to_{{LIBRARY}}.2.bam", sample=LIBRARY))
-    params:
-      LIBRARY=list(LIBRARY)
-    resources:
-        account='pengel_spirit',
-        runtime_s="12000", #10h
-        mem_mb=lambda wildcards, attempt:200000+attempt*10000 #10G
-    threads: 20
-    message: "Mapping to assemblies"
-    log: "logs/05_MAG_building/02_Mapping_to_{LIBRARY}_norm"
-    benchmark: "logs/benchmark/05_MAG_building/02_Mapping_to_{LIBRARY}_norm.benchmark"
-    conda:
-        "envs/03_assemblyStats.yaml"
-    shell:
-        """
-        mkdir -p /scratch/gsartonl/alignments/norm/
-        mkdir -p 05_MAG_building/01_mapping/Norm/
-        scaffold=$(echo {input.scaffoldsFiltered} | cut -d '/' -f 3)
-        for LIBRARY in {params.LIBRARY};
-        do
-            echo "--------- Mapping FWD --------"
-            bwa mem -a -t 16 {input.scaffoldsFiltered} 01_trimmed/merged/${{LIBRARY}}_R1_merged.fq > /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam;
-            samtools view -F 4 -bh /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam | samtools sort -O bam -@ 4 -m 8G - > /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.1.bam;
-            echo "--------- Mapping REV --------"
-            bwa mem -a -t 16 {input.scaffoldsFiltered} 01_trimmed/merged/${{LIBRARY}}_R2_merged.fq > /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam;
-            samtools view -F 4 -bh /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam | samtools sort -O bam -@ 4 -m 8G - > /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.2.bam;
+# rule MapReadsAllVSAllNorm:
+#     input:
+#       scaffoldsFiltered="03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta"
+#     output:
+#         alignment=expand("/scratch/gsartonl/alignments/norm/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
+#         #alignment=expand("05_MAG_building/01_mapping/Norm/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY),
+#       #tmpAlnFWD=temp(expand("/scratch/gsartonl/alignments/norm/{sample}_mapped_to_{{LIBRARY}}.1.bam", sample=LIBRARY)),
+#       #tmpAlnREV=temp(expand("/scratch/gsartonl/alignments/norm/{sample}_mapped_to_{{LIBRARY}}.2.bam", sample=LIBRARY))
+#     params:
+#       LIBRARY=list(LIBRARY)
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="12000", #10h
+#         mem_mb=lambda wildcards, attempt:200000+attempt*10000 #10G
+#     threads: 20
+#     message: "Mapping to assemblies"
+#     log: "logs/05_MAG_building/02_Mapping_to_{LIBRARY}_norm"
+#     benchmark: "logs/benchmark/05_MAG_building/02_Mapping_to_{LIBRARY}_norm.benchmark"
+#     conda:
+#         "envs/03_assemblyStats.yaml"
+#     shell:
+#         """
+#         mkdir -p /scratch/gsartonl/alignments/norm/
+#         mkdir -p 05_MAG_building/01_mapping/Norm/
+#         scaffold=$(echo {input.scaffoldsFiltered} | cut -d '/' -f 3)
+#         for LIBRARY in {params.LIBRARY};
+#         do
+#             echo "--------- Mapping FWD --------"
+#             bwa mem -a -t 16 {input.scaffoldsFiltered} 01_trimmed/merged/${{LIBRARY}}_R1_merged.fq > /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam;
+#             samtools view -F 4 -bh /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam | samtools sort -O bam -@ 4 -m 8G - > /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.1.bam;
+#             echo "--------- Mapping REV --------"
+#             bwa mem -a -t 16 {input.scaffoldsFiltered} 01_trimmed/merged/${{LIBRARY}}_R2_merged.fq > /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam;
+#             samtools view -F 4 -bh /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam | samtools sort -O bam -@ 4 -m 8G - > /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.2.bam;
 
-            echo "--------- Merging outputs  --------"
-            samtools merge -o /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.bam /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.1.bam /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.2.bam
+#             echo "--------- Merging outputs  --------"
+#             samtools merge -o /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.bam /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.1.bam /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.2.bam
 
-            echo " -------- Removing .sam files --------"
-            rm /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam
-            rm /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam
-            echo "--------- Done --------"
-        done
-        """
+#             echo " -------- Removing .sam files --------"
+#             rm /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam
+#             rm /scratch/gsartonl/alignments/norm/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam
+#             echo "--------- Done --------"
+#         done
+#         """
 
-rule MapReadsAllVSAllMEGA:
-    input:
-      scaffoldsFiltered="03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta",
-    output:
-      alignment=expand("/scratch/gsartonl/alignments/MEGAHIT/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY),
-      #alignment=expand("05_MAG_building/01_mapping/MEGAHIT/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
-    params:
-      LIBRARY=list(LIBRARY)
-    resources:
-        account='pengel_spirit',
-        runtime_s="12000", #10h
-        mem_mb=lambda wildcards, attempt:200000+attempt*10000 #10G
-    threads: 20
-    message: "Mapping to assemblies"
-    log: "logs/05_MAG_building/02_Mapping_to_{LIBRARY}_MEGAHIT"
-    benchmark:"logs/benchmark/05_MAG_building/02_Mapping_to_{LIBRARY}_MEGAHIT.benchmark"
-    conda:
-        "envs/03_assemblyStats.yaml"
-    shell:
-        """
-        mkdir -p /scratch/gsartonl/alignments/MEGAHIT/
-        mkdir -p 05_MAG_building/01_mapping/MEGAHIT/
-        scaffold=$(echo {input.scaffoldsFiltered} | cut -d '/' -f 3)
-        echo ${{scaffold}};
-        for LIBRARY in {params.LIBRARY};
-        do
-            echo "--------- Mapping FWD --------"
-            bwa mem -a -t 16 {input.scaffoldsFiltered} 01_trimmed/merged/${{LIBRARY}}_R1_merged.fq > /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam ;
-            samtools view -F 4 -bh /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam | samtools sort -O bam -@ 4 -m 8G - > /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.1.bam ;
+# rule MapReadsAllVSAllMEGA:
+#     input:
+#       scaffoldsFiltered="03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta"
+#     output:
+#       alignment=expand("/scratch/gsartonl/alignments/MEGAHIT/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
+#       #alignment=expand("05_MAG_building/01_mapping/MEGAHIT/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
+#     params:
+#       LIBRARY=list(LIBRARY)
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="12000", #10h
+#         mem_mb=lambda wildcards, attempt:200000+attempt*10000 #10G
+#     threads: 20
+#     message: "Mapping to assemblies"
+#     log: "logs/05_MAG_building/02_Mapping_to_{LIBRARY}_MEGAHIT"
+#     benchmark:"logs/benchmark/05_MAG_building/02_Mapping_to_{LIBRARY}_MEGAHIT.benchmark"
+#     conda:
+#         "envs/03_assemblyStats.yaml"
+#     shell:
+#         """
+#         mkdir -p /scratch/gsartonl/alignments/MEGAHIT/
+#         mkdir -p 05_MAG_building/01_mapping/MEGAHIT/
+#         scaffold=$(echo {input.scaffoldsFiltered} | cut -d '/' -f 3)
+#         echo ${{scaffold}};
+#         for LIBRARY in {params.LIBRARY};
+#         do
+#             echo "--------- Mapping FWD --------"
+#             bwa mem -a -t 16 {input.scaffoldsFiltered} 01_trimmed/merged/${{LIBRARY}}_R1_merged.fq > /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam ;
+#             samtools view -F 4 -bh /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam | samtools sort -O bam -@ 4 -m 8G - > /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.1.bam ;
 
-            echo "--------- Mapping REV --------"
-            bwa mem -a -t 16 {input.scaffoldsFiltered} 01_trimmed/merged/${{LIBRARY}}_R2_merged.fq > /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam ;
-            samtools view -F 4 -bh /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam | samtools sort -O bam -@ 4 -m 8G - > /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.2.bam ;
+#             echo "--------- Mapping REV --------"
+#             bwa mem -a -t 16 {input.scaffoldsFiltered} 01_trimmed/merged/${{LIBRARY}}_R2_merged.fq > /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam ;
+#             samtools view -F 4 -bh /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam | samtools sort -O bam -@ 4 -m 8G - > /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.2.bam ;
 
-            echo "--------- Merging outputs  --------"
-            samtools merge -o /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.bam /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.1.bam /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.2.bam
+#             echo "--------- Merging outputs  --------"
+#             samtools merge -o /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.bam /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.1.bam /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.2.bam
 
-            echo " -------- Removing .sam files --------"
-            rm /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam
-            rm /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam
+#             echo " -------- Removing .sam files --------"
+#             rm /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.1.sam
+#             rm /scratch/gsartonl/alignments/MEGAHIT/${{LIBRARY}}_mapped_to_${{scaffold}}.2.sam
             
-            echo "--------- Done --------"
-        done
-        """
+#             echo "--------- Done --------"
+#         done
+#         """
 
-rule GetDepthNorm:
-    input:
-        alignment=expand("/scratch/gsartonl/alignments/norm/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
+# rule GetDepthNorm:
+#     input:
+#         alignment=expand("/scratch/gsartonl/alignments/norm/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
 
-      #alignment=expand("05_MAG_building/01_mapping/Norm/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
-    output:
-      depth="05_MAG_building/02_depth/norm/{LIBRARY}.depth"
-    resources:
-        account='pengel_spirit',
-        runtime_s="12000", #10h
-        mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
-    threads:1
-    message: "Getting alignment depths"
-    log: "logs/05_MAG_building/03_Depth_{LIBRARY}_norm"
-    benchmark: "logs/benchmark/05_MAG_building/03_Depth_{LIBRARY}_norm.benchmark"
-    conda:
-        "envs/05_metabat2.yaml"
-    shell:
-        """
-          jgi_summarize_bam_contig_depths --outputDepth {output.depth} \
-          {input.alignment}
+#       #alignment=expand("05_MAG_building/01_mapping/Norm/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
+#     output:
+#       depth="05_MAG_building/02_depth/norm/{LIBRARY}.depth"
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="12000", #10h
+#         mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
+#     threads:1
+#     message: "Getting alignment depths"
+#     log: "logs/05_MAG_building/03_Depth_{LIBRARY}_norm"
+#     benchmark: "logs/benchmark/05_MAG_building/03_Depth_{LIBRARY}_norm.benchmark"
+#     conda:
+#         "envs/05_metabat2.yaml"
+#     shell:
+#         """
+#           jgi_summarize_bam_contig_depths --outputDepth {output.depth} \
+#           {input.alignment}
 
-       """
+#        """
 
-rule GetDepthMEGA:
-    input:
-      alignments=expand("/scratch/gsartonl/alignments/MEGAHIT/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
-      #alignments=expand("05_MAG_building/01_mapping/MEGAHIT/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
-    output:
-      depth="05_MAG_building/02_depth/MEGAHIT/{LIBRARY}.depth"
-    resources:
-        account='pengel_spirit',
-        runtime_s="12000", #10h
-        mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
-    threads:1
-    message: "Getting alignment depths"
-    log: "logs/05_MAG_building/03_Depth_{LIBRARY}_MEGAHIT"
-    benchmark: "logs/benchmark/05_MAG_building/03_Depth_{LIBRARY}_MEGAHIT.benchmark"
-    conda:
-        "envs/05_metabat2.yaml"
-    shell:
-        """
-          jgi_summarize_bam_contig_depths --outputDepth {output.depth} \
-          {input.alignments}
+# rule GetDepthMEGA:
+#     input:
+#       alignments=expand("/scratch/gsartonl/alignments/MEGAHIT/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
+#       #alignments=expand("05_MAG_building/01_mapping/MEGAHIT/{sample}_mapped_to_{{LIBRARY}}.bam", sample=LIBRARY)
+#     output:
+#       depth="05_MAG_building/02_depth/MEGAHIT/{LIBRARY}.depth"
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="12000", #10h
+#         mem_mb=lambda wildcards, attempt:10000+attempt*10000 #10G
+#     threads:1
+#     message: "Getting alignment depths"
+#     log: "logs/05_MAG_building/03_Depth_{LIBRARY}_MEGAHIT"
+#     benchmark: "logs/benchmark/05_MAG_building/03_Depth_{LIBRARY}_MEGAHIT.benchmark"
+#     conda:
+#         "envs/05_metabat2.yaml"
+#     shell:
+#         """
+#           jgi_summarize_bam_contig_depths --outputDepth {output.depth} \
+#           {input.alignments}
 
-       """
+#        """
 
-rule BinningNorm:
-    input:
-      scaffold="03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta",
-      depth="05_MAG_building/02_depth/norm/{LIBRARY}.depth"
-    output:
-      MAGs="05_MAG_building/03_MAGs/norm/{LIBRARY}_MAGs.fasta"
-    params:
-      minContigLen= 2000,
-      maxEdges= 500, #max edges per node
-      minCov= 1,
-      minClsSize= 200000#min bin size
-    resources:
-        account='pengel_spirit',
-        runtime_s="12000", #10h
-        mem_mb=lambda wildcards, attempt:50000+attempt*10000 #10G
-    threads: 20
-    message: "MAGs binning"
-    log: "logs/logs/05_MAG_building/04_Binning_{LIBRARY}_norm"
-    benchmark: "logs/benchmark/05_MAG_building/04_Binning_{LIBRARY}_norm.benchmark"
-    conda:
-        "envs/05_metabat2.yaml"
-    shell:
-        """
-      metabat2 -i {input.scaffold} \
-               -a {input.depth} \
-               -o {output.MAGs} \
-               --minContig {params.minContigLen} --maxEdges {params.maxEdges} \
-               -x {params.minCov} --minClsSize {params.minClsSize} \
-               --saveCls -v
+# rule BinningNorm:
+#     input:
+#       scaffold="03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_scaffolds_min1000bpCov1.fasta",
+#       depth="05_MAG_building/02_depth/norm/{LIBRARY}.depth"
+#     output:
+#       MAGs="05_MAG_building/03_MAGs/norm/{LIBRARY}_MAGs.fasta"
+#     params:
+#       minContigLen= 2000,
+#       maxEdges= 500, #max edges per node
+#       minCov= 1,
+#       minClsSize= 200000#min bin size
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="12000", #10h
+#         mem_mb=lambda wildcards, attempt:50000+attempt*10000 #10G
+#     threads: 20
+#     message: "MAGs binning"
+#     log: "logs/logs/05_MAG_building/04_Binning_{LIBRARY}_norm"
+#     benchmark: "logs/benchmark/05_MAG_building/04_Binning_{LIBRARY}_norm.benchmark"
+#     conda:
+#         "envs/05_metabat2.yaml"
+#     shell:
+#         """
+#       metabat2 -i {input.scaffold} \
+#                -a {input.depth} \
+#                -o {output.MAGs} \
+#                --minContig {params.minContigLen} --maxEdges {params.maxEdges} \
+#                -x {params.minCov} --minClsSize {params.minClsSize} \
+#                --saveCls -v
 
-      """
+#       """
 
-rule BinningMEGA:
-    input:
-      scaffold="03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta",
-      depth="05_MAG_building/02_depth/MEGAHIT/{LIBRARY}.depth"
-    output:
-      MAGs="05_MAG_building/03_MAGs/MEGAHIT/{LIBRARY}_MAGs"
-    params:
-      minContigLen= 2000,
-      maxEdges= 500, #max edges per node
-      minCov= 1,
-      minClsSize= 200000#min bin size
-    resources:
-        account='pengel_spirit',
-        runtime_s="12000", #10h
-        mem_mb=lambda wildcards, attempt:50000+attempt*10000 #10G
-    threads: 20
-    message: "MAGs binning"
-    log: "logs/05_MAG_building/04_Binning_{LIBRARY}_MEGAHIT"
-    benchmark: "logs/benchmark/05_MAG_building/04_Binning_{LIBRARY}_MEGAHIT.benchmark"
-    conda:
-        "envs/05_metabat2.yaml"
-    shell:
-        """
-      metabat2 -i {input.scaffold} \
-               -a {input.depth} \
-               -o {output.MAGs} \
-               --minContig {params.minContigLen} --maxEdges {params.maxEdges} \
-               -x {params.minCov} --minClsSize {params.minClsSize} \
-               --saveCls -v
+# rule BinningMEGA:
+#     input:
+#       scaffold="03_assembly/02_scaffoldsFiltered/{LIBRARY}/{LIBRARY}_MEGAHIT_scaffolds_min1000bpCov1.fasta",
+#       depth="05_MAG_building/02_depth/MEGAHIT/{LIBRARY}.depth"
+#     output:
+#       MAGs="05_MAG_building/03_MAGs/MEGAHIT/{LIBRARY}_MAGs"
+#     params:
+#       minContigLen= 2000,
+#       maxEdges= 500, #max edges per node
+#       minCov= 1,
+#       minClsSize= 200000#min bin size
+#     resources:
+#         account='pengel_spirit',
+#         runtime_s="12000", #10h
+#         mem_mb=lambda wildcards, attempt:50000+attempt*10000 #10G
+#     threads: 20
+#     message: "MAGs binning"
+#     log: "logs/05_MAG_building/04_Binning_{LIBRARY}_MEGAHIT"
+#     benchmark: "logs/benchmark/05_MAG_building/04_Binning_{LIBRARY}_MEGAHIT.benchmark"
+#     conda:
+#         "envs/05_metabat2.yaml"
+#     shell:
+#         """
+#       metabat2 -i {input.scaffold} \
+#                -a {input.depth} \
+#                -o {output.MAGs} \
+#                --minContig {params.minContigLen} --maxEdges {params.maxEdges} \
+#                -x {params.minCov} --minClsSize {params.minClsSize} \
+#                --saveCls -v
 
-      """
+#       """
 
 # rule MapReadsAllVSAllMEGA:
 #     input:

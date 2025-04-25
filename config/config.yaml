@@ -3,8 +3,7 @@
 username:
   - gsartonl
 
-path:
-  - /work/FAC/FBM/DMF/pengel/spirit/gsartonl/metagenomics
+working_directory: /work/FAC/FBM/DMF/pengel/spirit/gsartonl/metagenomics
 
 Preprocessing:
   raw : '/00_rawData'
@@ -15,13 +14,17 @@ assembly:
   inDir: '/01_trimmed'
   outDir: '/03_assembly'
 
+binning:
+  binning: '/04_bining'
+  index: '/scratch/gsartonl/metagenomics/index'
+
 HostGenome:
   - '/scratch/gsartonl/metagenomics/GCA_011392965.1_Fvar_1.2_genomic.fna'
-Index:
-  - '/scratch/gsartonl/metagenomics/index'
+
 
 scaffoldFiltering:
-  - '1000'
+  length: '1000'
+  coverage: '1'
 
 LIBRARY:
   - CM1
