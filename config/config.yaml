@@ -17,6 +17,10 @@ assembly:
 binning:
   binning: '/04_bining'
   index: '/scratch/gsartonl/metagenomics/index'
+  mapping: '/scratch/gsartonl/metagenomics/03_assembly'
+
+taxonomy:
+  checkm: '/04_checkm'
 
 HostGenome:
   - '/scratch/gsartonl/metagenomics/GCA_011392965.1_Fvar_1.2_genomic.fna'

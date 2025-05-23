@@ -1,0 +1,7 @@
+name: mags
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - metabat2
